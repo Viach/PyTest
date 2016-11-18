@@ -4,9 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.2/css/uikit.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.2/js/uikit.min.js"></script>
 </head>
 <body>
-<img src="{% static " images/sitelogo.png" %}" alt="Logo" />
-{% block content %}{% endblock %}
+<div id="container" class="uk-width-large-7-10">
+    <img src="{% static " images/sitelogo.png" %}" alt="Logo" />
+
+    <nav class="uk-navbar">
+        <ul class="uk-navbar-nav">
+            <li class="uk-active"><a href="">...</a></li>
+            <li><a href="">...</a></li>
+            <li class="uk-parent"><a href="">...</a></li>
+        </ul>
+    </nav>
+    {% block content %}{% endblock %}
+</div>
 </body>
 </html>
