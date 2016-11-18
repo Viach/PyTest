@@ -1,5 +1,15 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the quiz index.")
+    context = {'var': 'quiz index.html', }
+    return render(request, 'quiz/index.html', context)
+
+
+def quiz(request):
+    return HttpResponse("Start test here.")
+
+
+def useful_links(request):
+    return HttpResponse("Useful linkks  here.")
