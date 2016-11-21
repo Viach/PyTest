@@ -13,6 +13,16 @@ background: linear-gradient(to right,
 
 header {
     background: #eee;
+    background: linear-gradient(to right,
+                            White,
+                            Whitesmoke,
+                            gainsboro,
+                            LightGrey,
+                            LightGrey,
+                            gainsboro,
+                            Whitesmoke,
+                            White);
+
     color: #444;
 }
 
@@ -31,6 +41,18 @@ background: linear-gradient(to right,
 
 #container {
 background-color: Whitesmoke;
+}
+
+.uk-navbar {
+background: linear-gradient(to right,
+                            White,
+                            Whitesmoke,
+                            gainsboro,
+                            LightGrey,
+                            LightGrey,
+                            gainsboro,
+                            Whitesmoke,
+                            White);
 }
 
 #content {
