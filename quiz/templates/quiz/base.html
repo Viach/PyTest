@@ -10,17 +10,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.2/js/uikit.min.js"></script>
 </head>
 <body>
-<div id="container" class="uk-width-large-7-10 uk-width-medium-1-1 uk-container-center">
-    <img src="{% static 'images/sitelogo.png' %}" alt="Logo" />
 
-    <nav class="uk-navbar">
-        <ul class="uk-navbar-nav">
-            <li class="uk-active"><a href="">...</a></li>
-            <li><a href="">...</a></li>
-            <li class="uk-parent"><a href="">...</a></li>
-        </ul>
-    </nav>
-    {% block content %}{% endblock %}
+<div id="container" class="uk-width-large-7-10 uk-width-medium-1-1 uk-container-center">
+    <header>
+        <img src="{% static 'images/sitelogo.png' %}" alt="Logo"/>
+
+        <nav class="uk-navbar">
+            <ul class="uk-navbar-nav">
+                <li class="uk-active"><a href="">...</a></li>
+                <li><a href="">...</a></li>
+                <li class="uk-parent"><a href="">...</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        <hr>
+        footer (c)
+    </footer>
 </div>
 </body>
 </html>

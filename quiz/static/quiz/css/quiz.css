@@ -1,8 +1,26 @@
 body {
-background-color:
+background-color: Whitesmoke;
+background: linear-gradient(to right, LightGrey, White, White, White, White, White, White, LightGrey);
 }
 
+.body-gradient {
+    background: linear-gradient(to right, LightGrey, White, White, White, White, White, White, LightGrey);
+}
+
+header {
+    background: #eee;
+    color: #444;
+}
+
+footer{
+background-color: #999999;
+background: linear-gradient(to right,  White,  Whitesmoke,gainsboro, LightGrey,LightGrey,gainsboro,   Whitesmoke, White);
+}
 
 #container {
-background-color: red
+background-color: Whitesmoke;
+}
+
+#content {
+
 }
