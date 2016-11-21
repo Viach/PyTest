@@ -2,10 +2,10 @@
 {% block title %}власне сам тест{% endblock %}
 
 {% block content %}
-<pre>
-    {% for i in '.....' %}
-<h1>власне сам тест</h1>
+
+    {% for question in quiz.questions %}
+<h1>Q {{question}}</h1>
     {% endfor %}
 
-</pre>
+
 {% endblock %}

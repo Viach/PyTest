@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Quiz
 
 
 def index(request):
@@ -7,7 +8,8 @@ def index(request):
 
 
 def quiz(request):
-    context = {'var': 'quiz QUIZ', }
+    quiz = Quiz()
+    context = {'quiz': quiz , 'test': 'TEST'}
     return render(request, 'quiz/quiz.html', context)
 
 def useful_links(request):
