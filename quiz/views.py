@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 
 
@@ -8,8 +7,9 @@ def index(request):
 
 
 def quiz(request):
-    return HttpResponse("Start test here.")
-
+    context = {'var': 'quiz QUIZ', }
+    return render(request, 'quiz/quiz.html', context)
 
 def useful_links(request):
-    return HttpResponse("Useful linkks  here.")
+    context = {'var': 'quiz LINKS', }
+    return render(request, 'quiz/useful_links.html', context)
