@@ -4,7 +4,9 @@
 {% block content %}
 
     {% for question in quiz.questions %}
-<h1>Q {{question}}</h1>
+<h1>Q {{question.name}}</h1>
+<h1>A {{question.answers}}</h1>
+<hr>
     {% endfor %}
 
 
