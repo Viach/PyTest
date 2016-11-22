@@ -9,23 +9,23 @@ class CategoryQuestion(models.Model):
         return self.name
 
 
-class Answer(models.Model):
-    name = models.CharField(max_length=200)
-    explanation = models.TextField()
-    code = models.TextField()
-    category = models.ForeignKey(CategoryQuestion)
-
-    def __str__(self):
-        return self.name
-
-
 class Question(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     code = models.TextField()
     category = models.ForeignKey(CategoryQuestion)
-    correct_answer = models.ForeignKey(Answer)
     user_answer = None
+
+    def __str__(self):
+        return self.name
+
+
+class Answer(models.Model):
+    name = models.CharField(max_length=200)
+    explanation = models.TextField()
+    code = models.TextField()
+    question = models.ForeignKey(Question)
+    correct_answer = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
