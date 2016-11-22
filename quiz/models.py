@@ -34,6 +34,8 @@ class Answer(models.Model):
 class Quiz():
     def __init__(self, n=2):
         self.questions = Question.objects.all()[:n]
+        for k, v in enumerate(self.questions):
+            self.questions[k].answers = set(Answer.objects.filter(question=v.id))
 
     def __str__(self):
         return 'Set of Questions'
