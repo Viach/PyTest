@@ -3,11 +3,13 @@
 
 {% block content %}
 
-    {% for question in quiz.questions %}
+{% for question in quiz.questions %}
 <h1>Q {{question.name}}</h1>
 <h1>A {{question.answers}}</h1>
 <hr>
-    {% endfor %}
+{% endfor %}
+<hr>
+S {{request.session.quiz_status}}
 
 
 {% endblock %}
