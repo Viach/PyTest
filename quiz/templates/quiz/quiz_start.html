@@ -7,9 +7,11 @@
 
 <h1>Start quiz?</h1>
 <hr>
-
+{{info}}
 <hr>
-quiz_status {{request.session.quiz_status}}
 
+<form action="{% url 'quiz' 0 %}">
+    <input type="submit" value="Submit">
+</form>
 
 {% endblock %}
