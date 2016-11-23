@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Quiz
 
+quiz = Quiz()
+
 
 def index(request):
     context = {'var': 'quiz index.html', }
@@ -8,13 +10,21 @@ def index(request):
 
 
 def quiz(request):
-    if request.session.get('quiz_status', None) == "start":
-        request.session['current_question'] = 1
+    if request.session.get('quiz_status') == None:
+        request.session['current_question'] = 0
+        context = ''
+        return render(request, 'quiz/quiz_start.html', context)
+    elif request.session.get('quiz_status') == 'process':
+        request.session['current_question'] += 1
         request.session['quiz_status'] = 'process'
+        context = {'quiz.question': quiz.questions[request.session['current_question']],}
+        return render(request, 'quiz/quiz.html', context)
     else:
-        request.session['quiz_status'] = 'finish'
+        request.session['quiz_status'] = None
+        request.session['current_question'] = 0
+        context = {'result':'RESULT of quiz'}
+        return render(request, 'quiz/quiz_finish.html', context)
 
-    quiz = Quiz()
     context = {'quiz': quiz, 'test': 'TEST'}
     return render(request, 'quiz/quiz.html', context)
 
