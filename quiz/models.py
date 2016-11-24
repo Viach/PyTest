@@ -19,7 +19,7 @@ class Question(models.Model):
     code = models.TextField(blank=True)
     category = models.ForeignKey(CategoryQuestion)
     user_answer = None
-
+#
     def __str__(self):
         return self.name
 
