@@ -17,9 +17,12 @@ def quiz(request, *args):
         context = {'info': "INFO about quiz"}
         return render(request, 'quiz/quiz_start.html', context)
     elif status == 'next':
+        if request.session['current_question'] >= 0:
+            g.quiz.questions[request.session['current_question']].user_answer = set(int(i) for i in dict(request._get_post()).get('user_answer', [0,]))
+
         request.session['current_question'] += 1
         if request.session['current_question'] > len(g.quiz.questions) - 1:
-            return redirect('quiz', 'finish' )
+            return redirect('quiz', 'finish')
         else:
             context = {'current_question': g.quiz.questions[request.session['current_question']],
                        'current_question_number_in_quiz': request.session['current_question'],
@@ -28,7 +31,10 @@ def quiz(request, *args):
             return render(request, 'quiz/quiz.html', context)
     elif status == 'finish':
         request.session['current_question'] = 0
-        context = {'result': 'RESULT of quiz',}
+        context = {'result': g.quiz.result(),
+                   'correct_answer' : [c_a.correct_answer for c_a in g.quiz.questions],
+                   'user_answer': [u_a.user_answer for u_a in g.quiz.questions],
+                   }
         return render(request, 'quiz/quiz_finish.html', context)
     else:
         context = {'info': 'ERROR', }

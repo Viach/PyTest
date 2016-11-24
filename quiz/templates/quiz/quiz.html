@@ -8,8 +8,8 @@
 <form action="{% url 'quiz' 'next' %}" method="post">
     {% csrf_token %}
     <h1>Q {{current_question.name}}</h1>
-    {% for c_q in current_question.answers %}
-    <h3><input type={{current_question.input_type}} name={{c_q.id }}>Answer:  {{c_q.id }}  {{c_q.name}} {{c_q.correct_answer}}  </h3>
+    {% for c_q in current_question.answer %}
+    <h3><input type={{current_question.input_type}} name="user_answer" value={{c_q.id }}>Answer:  {{c_q.id }}  {{c_q.name}} {{c_q.correct_answer}}  </h3>
     {% endfor %}
     <input type="submit" value="Submit">
 </form>

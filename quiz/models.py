@@ -40,12 +40,15 @@ class Quiz():
     def __init__(self, n=2):
         self.questions = Question.objects.all()[:n]
         for k, v in enumerate(self.questions):
-            self.questions[k].answers = frozenset(Answer.objects.filter(question=v.id))
-            self.questions[k].correct_answers = {k.id for k in self.questions[k].answers if k.correct_answer }
-            self.questions[k].input_type = 'radio' if len(self.questions[k].correct_answers) == 1 else 'checkbox'
+            self.questions[k].answer = frozenset(Answer.objects.filter(question=v.id))
+            self.questions[k].correct_answer = set(k.id for k in self.questions[k].answer if k.correct_answer )
+            self.questions[k].input_type = 'radio' if len(self.questions[k].correct_answer) == 1 else 'checkbox'
 
     def __str__(self):
         return 'Set of Questions'
+
+    def result(self):
+        return [v.correct_answer == v.user_answer for v in self.questions]
 
 
 class UsefulLinks(models.Model):
