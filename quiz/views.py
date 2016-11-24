@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Quiz
 
-quiz = Quiz()
+quiz_test = Quiz()
 
 
 def index(request):
@@ -17,7 +17,7 @@ def quiz(request,*args):
         return render(request, 'quiz/quiz_start.html', context)
     elif int(status) in range(100):
 
-        context = {'quiz.question': quiz.questions[int(status)+1],}
+        context = {'quiz.question': quiz_test.questions[int(status)+1],}
         return render(request, 'quiz/quiz.html', context)
     else:
         request.session['current_question'] = 0
