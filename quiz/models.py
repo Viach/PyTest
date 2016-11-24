@@ -7,7 +7,7 @@ class G(object):
 
 class CategoryQuestion(models.Model):
     name = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
@@ -15,8 +15,8 @@ class CategoryQuestion(models.Model):
 
 class Question(models.Model):
     name = models.CharField(max_length=200)
-    description = models.TextField()
-    code = models.TextField()
+    description = models.TextField(blank=True)
+    code = models.TextField(blank=True)
     category = models.ForeignKey(CategoryQuestion)
     user_answer = None
 
@@ -26,8 +26,8 @@ class Question(models.Model):
 
 class Answer(models.Model):
     name = models.CharField(max_length=200)
-    explanation = models.TextField()
-    code = models.TextField()
+    explanation = models.TextField(blank=True)
+    code = models.TextField(blank=True)
     question = models.ForeignKey(Question)
     correct_answer = models.BooleanField(default=False)
 
