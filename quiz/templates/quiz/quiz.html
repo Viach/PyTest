@@ -4,12 +4,12 @@
 {% block content %}
 
 
-<h1>Q {{question.name}}</h1>
-<h1>A {{question.answers}}</h1>
+<h1>Q {{quiz.question.name}}</h1>
+<h1>A {{quiz.question.answers}}</h1>
 <hr>
-
+{{quiz.question}}
 <hr>
-<form action="{% url 'quiz' 'process' %}">
+<form action="{% url 'quiz' 1 %}">
     <input type="submit" value="Submit">
 </form>
 

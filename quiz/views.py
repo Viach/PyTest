@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Quiz
+from .models import Quiz, G
 
-quiz_test = Quiz()
+g = G() # my global variable
 
 
 def index(request):
@@ -9,19 +9,19 @@ def index(request):
     return render(request, 'quiz/index.html', context)
 
 
-def quiz(request,*args):
+def quiz(request, *args):
     status = args[0]
     if status == 'start':
         request.session['current_question'] = 0
-        context = {'info':"INFO about quiz"}
+        g.quiz = Quiz()
+        context = {'info': "INFO about quiz"}
         return render(request, 'quiz/quiz_start.html', context)
     elif int(status) in range(100):
-
-        context = {'quiz.question': quiz_test.questions[int(status)+1],}
+        context = {'quiz.question': g.quiz.questions[int(status) + 1], }
         return render(request, 'quiz/quiz.html', context)
     else:
         request.session['current_question'] = 0
-        context = {'result':'RESULT of quiz'}
+        context = {'result': 'RESULT of quiz'}
         return render(request, 'quiz/quiz_finish.html', context)
 
     context = {'quiz': quiz, 'test': 'TEST'}
