@@ -9,7 +9,12 @@
 <hr>
 {{current_question_number_in_quiz}}
 <hr>
+<form action="{% url 'quiz' 'finish' %}">
+    <input type="submit" value="Stop">
+
+</form>
 <form action="{% url 'quiz' 'next' %}">
+
     <input type="submit" value="Submit">
 </form>
 

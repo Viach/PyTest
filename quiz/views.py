@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Quiz, G
 
 g = G()  # my global variable
@@ -19,14 +19,16 @@ def quiz(request, *args):
     elif status == 'next':
         request.session['current_question'] += 1
         if request.session['current_question'] > len(g.quiz.questions) - 1:
-            request.session['current_question'] = 0
-            context = {'result': 'RESULT of quiz'}
-            return render(request, 'quiz/quiz_finish.html', context)
+            return redirect('quiz', 'finish' )
         else:
             context = {'current_question': g.quiz.questions[request.session['current_question']],
                        'current_question_number_in_quiz': request.session['current_question'],
                        }
             return render(request, 'quiz/quiz.html', context)
+    elif status == 'finish':
+        request.session['current_question'] = 0
+        context = {'result': 'RESULT of quiz',}
+        return render(request, 'quiz/quiz_finish.html', context)
     else:
         context = {'info': 'ERROR', }
         return render(request, 'quiz/quiz.html', context)
