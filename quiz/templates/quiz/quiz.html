@@ -4,16 +4,15 @@
 {% block content %}
 {{info}}
 {{current_question_number_in_quiz}}
-<h1>Q {{current_question.name}}</h1>
-<h1>A {{current_question.answers}}</h1>
 <hr>
-{{current_question_number_in_quiz}}
-<hr>
-
 <form action="{% url 'quiz' 'next' %}">
+    <h1>Q {{current_question.name}}</h1>
+    <h1>A {{current_question.answers}}</h1>
 
     <input type="submit" value="Submit">
 </form>
+
+<hr>
 <form action="{% url 'quiz' 'finish' %}">
     <input type="submit" value="Cancel Testing">
 </form>

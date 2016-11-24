@@ -23,6 +23,7 @@ def quiz(request, *args):
         else:
             context = {'current_question': g.quiz.questions[request.session['current_question']],
                        'current_question_number_in_quiz': request.session['current_question'],
+                       'info': 'Quiz in process...',
                        }
             return render(request, 'quiz/quiz.html', context)
     elif status == 'finish':
