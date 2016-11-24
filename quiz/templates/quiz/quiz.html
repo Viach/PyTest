@@ -7,8 +7,9 @@
 <hr>
 <form action="{% url 'quiz' 'next' %}">
     <h1>Q {{current_question.name}}</h1>
-    <h1>A {{current_question.answers}}</h1>
-
+    {% for c_q in current_question.answers %}
+    <h3><input type="checkbox" name="{{c_q.id }}" value=True >Answer:  {{c_q.id }}  {{c_q.name}} {{c_q.correct_answer}}</h3>
+    {% endfor %}
     <input type="submit" value="Submit">
 </form>
 
