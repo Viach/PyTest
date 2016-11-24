@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Quiz, G
 
-g = G() # my global variable
+g = G()  # my global variable
 
 
 def index(request):
@@ -12,22 +12,24 @@ def index(request):
 def quiz(request, *args):
     status = args[0]
     if status == 'start':
-        request.session['current_question'] = 0
+        request.session['current_question'] = -1
         g.quiz = Quiz()
         context = {'info': "INFO about quiz"}
         return render(request, 'quiz/quiz_start.html', context)
-    elif int(status) in range(100):
-
-        context = {'current_question': g.quiz.questions[int(status) + 1],
-                   'test':g.quiz.questions[int(status) + 1]}
-        return render(request, 'quiz/quiz.html', context)
+    elif status == 'next':
+        request.session['current_question'] += 1
+        if request.session['current_question'] > len(g.quiz.questions) - 1:
+            request.session['current_question'] = 0
+            context = {'result': 'RESULT of quiz'}
+            return render(request, 'quiz/quiz_finish.html', context)
+        else:
+            context = {'current_question': g.quiz.questions[request.session['current_question']],
+                       'current_question_number_in_quiz': request.session['current_question'],
+                       }
+            return render(request, 'quiz/quiz.html', context)
     else:
-        request.session['current_question'] = 0
-        context = {'result': 'RESULT of quiz'}
-        return render(request, 'quiz/quiz_finish.html', context)
-
-    context = {'quiz': quiz, 'test': 'TEST'}
-    return render(request, 'quiz/quiz.html', context)
+        context = {'info': 'ERROR', }
+        return render(request, 'quiz/quiz.html', context)
 
 
 def useful_links(request):

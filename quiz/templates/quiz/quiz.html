@@ -2,14 +2,14 @@
 {% block title %}власне сам тест{% endblock %}
 
 {% block content %}
-{{test}}
-
+{{info}}
+{{current_question_number_in_quiz}}
 <h1>Q {{current_question.name}}</h1>
 <h1>A {{current_question.answers}}</h1>
 <hr>
-{{current_question}}
+{{current_question_number_in_quiz}}
 <hr>
-<form action="{% url 'quiz' 1 %}">
+<form action="{% url 'quiz' 'next' %}">
     <input type="submit" value="Submit">
 </form>
 
