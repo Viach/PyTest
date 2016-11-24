@@ -17,7 +17,9 @@ def quiz(request, *args):
         context = {'info': "INFO about quiz"}
         return render(request, 'quiz/quiz_start.html', context)
     elif int(status) in range(100):
-        context = {'quiz.question': g.quiz.questions[int(status) + 1], }
+
+        context = {'current_question': g.quiz.questions[int(status) + 1],
+                   'test':g.quiz.questions[int(status) + 1]}
         return render(request, 'quiz/quiz.html', context)
     else:
         request.session['current_question'] = 0
