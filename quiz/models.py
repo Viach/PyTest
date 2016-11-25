@@ -13,23 +13,30 @@ class CategoryQuestion(models.Model):
         return self.name
 
 
+class Answer(models.Model):
+    name = models.CharField(max_length=200)
+    explanation = models.TextField(blank=True)
+    code = models.TextField(blank=True)
+    # question = models.ForeignKey(Question)
+    correct_answer = models.BooleanField(default=False)
+
+    def __str__(self):
+        return 'Name: ' + str(self.name) + '   Is correct: ' + str(self.correct_answer)
+
+
 class Question(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     code = models.TextField(blank=True)
     category = models.ForeignKey(CategoryQuestion)
+    a1 = Answer(object)
+    a2 = Answer(object)
+    a3 = Answer(object)
+    a4 = Answer(object)
     user_answer = None
 
     def __str__(self):
         return self.name
-
-
-class Answer(models.Model):
-    name = models.CharField(max_length=200)
-    explanation = models.TextField(blank=True)
-    code = models.TextField(blank=True)
-    question = models.ForeignKey(Question)
-    correct_answer = models.BooleanField(default=False)
 
     def __str__(self):
         return 'Name: ' + str(self.name) + '   Is correct: ' + str(self.correct_answer)
