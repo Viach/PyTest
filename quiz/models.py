@@ -29,14 +29,11 @@ class Question(models.Model):
     description = models.TextField(blank=True)
     code = models.TextField(blank=True)
     category = models.ForeignKey(CategoryQuestion)
-    answers = models.ManyToManyField(Answer)
+    answer = models.OneToOneField(Answer)
     user_answer = None
 
     def __str__(self):
         return self.name
-
-    def __str__(self):
-        return 'Name: ' + str(self.name) + '   Is correct: ' + str(self.correct_answer)
 
 
 class Quiz():
