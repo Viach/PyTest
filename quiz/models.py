@@ -17,7 +17,7 @@ class Answer(models.Model):
     name = models.CharField(max_length=200)
     explanation = models.TextField(blank=True)
     code = models.TextField(blank=True)
-    # question = models.ForeignKey(Question)
+    ### question = models.ForeignKey(Question)
     correct_answer = models.BooleanField(default=False)
 
     def __str__(self):
