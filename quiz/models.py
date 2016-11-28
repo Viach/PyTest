@@ -28,7 +28,8 @@ class Question(models.Model):
         return self.name
 
     def get_answers(self):
-        return self.answers.split('\r\n')
+        list_answers = self.answers.split('\r\n')
+        return dict(zip(range(1,len(list_answers)+1) , list_answers))
 
     def get_correct_answers(self):
         return [int(i) for i in self.correct_answer.split(',')]
