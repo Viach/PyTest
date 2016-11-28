@@ -1,9 +1,16 @@
 from django.db import models
 from  django.core.validators import validate_comma_separated_integer_list
 
+from  random import shuffle
+
 
 class G(object):
-    pass
+    def __init__(self):
+        # delete all children for G class
+        pass
+
+    def __str__(self):
+        return 'My Global Object'
 
 
 class CategoryQuestion(models.Model):
@@ -29,7 +36,12 @@ class Question(models.Model):
 
     def get_answers(self):
         list_answers = self.answers.split('\r\n')
-        return dict(zip(range(1,len(list_answers)+1) , list_answers))
+        return dict(zip(range(1, len(list_answers) + 1), list_answers))
+
+    def get_answers_order(self):
+        keys = list(self.get_answers().keys())
+        shuffle(keys)
+        return keys
 
     def get_correct_answers(self):
         return [int(i) for i in self.correct_answer.split(',')]
