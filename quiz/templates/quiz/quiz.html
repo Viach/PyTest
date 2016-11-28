@@ -8,6 +8,7 @@
 <form action="{% url 'quiz' 'next' %}" method="post">
     {% csrf_token %}
     <h1>Q {{current_question.name}}</h1>
+    <h3>Code <pre>{{current_question.code}}</pre></h3>
     {% for c_q in current_question.answers_order %}
     <h3><input type={{current_question.input_type}} name="user_answer" value={{c_q }}>Answer:  {{c_q }}  {{current_question.dict_answers.c_q}}   </h3>
     {% endfor %}
