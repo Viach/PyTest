@@ -17,6 +17,8 @@ def quiz(request, *args):
         context = {'info': "INFO about quiz"}
         return render(request, 'quiz/quiz_start.html', context)
     elif status == 'next':
+        if 'quiz' not in g.__dict__.keys():
+            return redirect('quiz', 'start')
         if request.session['current_question'] >= 0:
             g.quiz.questions[request.session['current_question']].user_answer = set(
                 int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
