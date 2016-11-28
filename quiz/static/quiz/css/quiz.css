@@ -58,3 +58,8 @@ background: linear-gradient(to right,
 #content {
 
 }
+
+.code {
+background-color : dimgrey;
+color: #ffa;
+}
