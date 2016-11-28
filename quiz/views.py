@@ -38,7 +38,7 @@ def quiz(request, *args):
     elif status == 'finish':
         request.session['current_question'] = 0
         context = {'result': g.quiz.result(),
-                   'correct_answer': [c_a.correct_answer for c_a in g.quiz.questions],
+                   'correct_answer': [c_a.get_correct_answer() for c_a in g.quiz.questions],
                    'user_answer': [u_a.user_answer for u_a in g.quiz.questions],
                    }
         return render(request, 'quiz/quiz_finish.html', context)

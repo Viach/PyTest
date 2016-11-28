@@ -43,11 +43,11 @@ class Question(models.Model):
         shuffle(keys)
         return keys
 
-    def get_correct_answers(self):
-        return [int(i) for i in self.correct_answer.split(',')]
+    def get_correct_answer(self):
+        return {int(i) for i in self.correct_answer.split(',')}
 
     def get_input_type(self):
-        return 'radio' if len(self.get_correct_answers()) == 1 else 'checkbox'
+        return 'radio' if len(self.get_correct_answer()) == 1 else 'checkbox'
 
 
 class Quiz():
@@ -58,7 +58,7 @@ class Quiz():
         return 'Set of Questions'
 
     def result(self):
-        return [v.get_correct_answer == v.user_answer for v in self.questions]
+        return [v.get_correct_answer() == v.user_answer for v in self.questions]
 
 
 class UsefulLinks(models.Model):
