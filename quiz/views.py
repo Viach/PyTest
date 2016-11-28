@@ -24,7 +24,8 @@ def quiz(request, *args):
         if request.session['current_question'] > len(g.quiz.questions) - 1:
             return redirect('quiz', 'finish')
         else:
-            context = {'current_question': g.quiz.questions[request.session['current_question']],
+            context = {'current_question': g.quiz.questions[request.session['current_question']].get_answers()
+,
                        'current_question_number_in_quiz': request.session['current_question'],
                        'info': 'Quiz in process...',
                        }
