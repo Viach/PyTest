@@ -12,7 +12,6 @@ class CategoryQuestion(models.Model):
         return self.name
 
 
-
 class Question(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
@@ -49,7 +48,6 @@ class G(object):
         return 'My Global Object'
 
 
-
 class Quiz():
     def __init__(self, n=3):
         self.questions = Question.objects.all()[:n]
@@ -61,7 +59,8 @@ class Quiz():
         list_result = [v.get_correct_answer() == v.user_answer for v in self.questions]
         c_a = list_result.count(True)
         w_a = list_result.count(False)
-        data_result = [c_a, w_a, round(c_a / (c_a + w_a) * 100)]
+        k = round(c_a / (c_a + w_a) * 100)
+        data_result = [c_a, w_a, k, k >= 80]
         return [list_result, data_result]
 
 

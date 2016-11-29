@@ -36,7 +36,7 @@ def quiz(request, *args):
             current_question.start_time = datetime.now()
             context = {'current_question': current_question,
                        'current_question_number_in_quiz': request.session['current_question'] + 1,
-                       'info': 'Quiz in process...',
+                       'number_questions': len(g.quiz.questions),
                        }
             return render(request, 'quiz/quiz.html', context)
     elif status == 'finish':

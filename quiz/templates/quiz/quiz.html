@@ -2,27 +2,22 @@
 {% block title %}власне сам тест{% endblock %}
 
 {% block content %}
-{{info}}
-{{current_question_number_in_quiz}}
-<hr>
 <form action="{% url 'quiz' 'next' %}" method="post">
+    <div class="uk-text-center uk-text-muted uk-text-bold"> Питання {{current_question_number_in_quiz}} із {{number_questions}} питань</div>
     {% csrf_token %}
-    <h3>Q {{current_question.name}}</h3>
+    <div class="uk-text-large">{{current_question.name}}</div>
     {% if current_question.code %}
-    <h3>Code
+    <div>Code
         <pre class="code">{{current_question.code}}</pre>
-    </h3>
+    </div>
     {% endif %}
     {% for k, v in current_question.list_answers %}
-    <h4><input type={{current_question.input_type}} name="user_answer" value={{k}}>{{v}}</h4>
+    <ul class="uk-list-space"><input type={{current_question.input_type}} name="user_answer" value={{k}}>{{v}}</ul>
     {% endfor %}
-    <input type="submit" value="Записати">
+    <input class="uk-button-large" type="submit" value="Записати">
 </form>
 
 <hr>
-<form action="{% url 'quiz' 'start' %}">
-    <input type="submit" value="Припинити тестування">
-</form>
-<hr>
+
 
 {% endblock %}

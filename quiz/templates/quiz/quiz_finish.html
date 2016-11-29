@@ -6,10 +6,11 @@
 
 <p>
     Результат тесту:{% for r in result.0%}
-{%if r%}<span class="result_answer_true"> T {%else%} </span><span class="result_answer_false">F </span>{%endif%}
+    {%if r%}<span class="result_answer_true"> T {%else%} </span><span class="result_answer_false">F </span>{%endif%}
     {% endfor %}
 </p>
-Вірно дано відповідь на {{result.1.2}} % запитань.
+Вірно дано відповідь на {{result.1.2}} % запитань. Тест {% if result.1.3 %}<span class="result_answer_true"> успішно пройдено{%else%} </span>
+<span class="result_answer_false">не пройдено</span>{%endif%}.
 <hr>
 
 
@@ -29,14 +30,13 @@
     {% if not r %}
     <div>Правильна відповідь:
         {% for i in correct_answer %}
-    <div>{{i}}</div>
-    {% endfor %}
+        <div>{{i}}</div>
+        {% endfor %}
     </div>
     <div>Пояснення: {{ explanation }}</div>
     {% endif %}
 </div>
 {% endfor %}
-
 <hr>
-quiz_status {{request.session.quiz_status}}
+
 {% endblock %}
