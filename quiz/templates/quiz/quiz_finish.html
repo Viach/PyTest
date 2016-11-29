@@ -4,15 +4,17 @@
 {% block content %}
 
 
-<h1>{{result}}</h1>
-<hr>
-{% for r, correct_answer, user_answer, explanation in answer_r_c_u_e %}
-<h3>Результат: {{ r }}</h3>
+<h2>{{result}}</h2>
+<hr><hr>
+{% for r, name, correct_answer, user_answer, explanation in answer_r_n_c_u_e %}
+<h3>Запитання: {{ name }}</h3>
+<h4>Результат: {{ r }}</h4>
 {% if not r %}
-<h3>Ваша відповідь: {{ user_answer }}</h3>
-<h3>Правильна відповідь: {{ correct_answer }}</h3>
-<h3>Пояснення: {{ explanation }}</h3>
+<h4>Ваша відповідь: {{ user_answer }}</h4>
+<h4>Правильна відповідь: {{ correct_answer }}</h4>
+<h4>Пояснення: {{ explanation }}</h4>
 {% endif %}
+<hr>
 {% endfor %}
 <hr>
 quiz_status {{request.session.quiz_status}}
