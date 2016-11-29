@@ -36,12 +36,9 @@ class Question(models.Model):
 
     def get_answers(self):
         list_answers = self.answers.split('\r\n')
-        return dict(zip(range(1, len(list_answers) + 1), list_answers))
-
-    def get_answers_order(self):
-        keys = list(self.get_answers().keys())
-        shuffle(keys)
-        return keys
+        list_answers = [[k, v] for k, v in zip(range(1, len(list_answers) + 1), list_answers)]
+        shuffle(list_answers)
+        return list_answers
 
     def get_correct_answer(self):
         return {int(i) for i in self.correct_answer.split(',')}

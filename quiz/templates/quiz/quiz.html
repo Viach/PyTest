@@ -8,9 +8,11 @@
 <form action="{% url 'quiz' 'next' %}" method="post">
     {% csrf_token %}
     <h1>Q {{current_question.name}}</h1>
-    <h3>Code <pre class="code">{{current_question.code}}</pre></h3>
-    {% for c_q in current_question.answers_order %}
-    <h4><input type={{current_question.input_type}} name="user_answer" value={{c_q}}>{{c_q}} {{current_question.dict_answers.c_q}}</h4>
+    <h3>Code
+        <pre class="code">{{current_question.code}}</pre>
+    </h3>
+    {% for k,v in current_question.list_answers %}
+    <h4><input type={{current_question.input_type}} name="user_answer" value={{k}}> {{v}}</h4>
     {% endfor %}
     <input type="submit" value="Submit">
 </form>
@@ -20,14 +22,5 @@
     <input type="submit" value="Cancel Testing">
 </form>
 <hr>
-<p>{{current_question.dict_answers}}</p>
-<p>{{current_question.answers_order}}</p>
-
-{% for k in current_question.answers_order %}
-<h4>{{k}}=>{{current_question.dict_answers.k}}<== не працює</h4>
-<p>K-{{current_question.answers_order.k}}</p>
-{%endfor%}
-<hr>
-<h4>=>{{current_question.dict_answers.2}}<==  але так, працює</h4>
 
 {% endblock %}

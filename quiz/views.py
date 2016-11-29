@@ -28,10 +28,8 @@ def quiz(request, *args):
             return redirect('quiz', 'finish')
         else:
             current_question = g.quiz.questions[request.session['current_question']]
-            current_question.answers_order = current_question.get_answers_order()
-            current_question.dict_answers = current_question.get_answers()
+            current_question.list_answers = current_question.get_answers()
             current_question.input_type = current_question.get_input_type()
-
             context = {'current_question': current_question,
                        'current_question_number_in_quiz': request.session['current_question'] + 1,
                        'info': 'Quiz in process...',
