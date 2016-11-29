@@ -7,7 +7,7 @@ g = G()  # my global variable
 
 
 def index(request):
-    context = {'var': 'quiz index.html', }
+    context = {'categories': g.categories, }
     return render(request, 'quiz/index.html', context)
 
 

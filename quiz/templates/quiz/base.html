@@ -11,8 +11,9 @@
 <body>
 <div id="container" class="uk-width-large-7-10 uk-width-medium-1-1 uk-container-center">
     <header>
-        <img src="{% static 'quiz/images/python_logo.png' %}" class="site_logo" alt="Logo"/>
+
         <nav class="uk-navbar">
+            <img src="{% static 'quiz/images/python_logo.png' %}" class="site_logo" alt="Logo"/>
             <ul class="uk-navbar-nav">
                 <li><a href="{% url 'index' %}">Про тест</a></li>
                 <li><a href="{% url 'quiz' 'start' %}">Тест</a></li>
@@ -25,7 +26,7 @@
     </div>
     <footer>
         <hr>
-        footer (c)
+        DebOS (c) 2016
     </footer>
 </div>
 </body>

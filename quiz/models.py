@@ -4,15 +4,6 @@ from  django.core.validators import validate_comma_separated_integer_list
 from  random import shuffle
 
 
-class G(object):
-    def __init__(self):
-        # delete all children for G class
-        pass
-
-    def __str__(self):
-        return 'My Global Object'
-
-
 class CategoryQuestion(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
@@ -48,6 +39,16 @@ class Question(models.Model):
         return 'radio' if len(self.get_correct_answer()) == 1 else 'checkbox'
 
 
+class G(object):
+    def __init__(self):
+        # delete all children for G class
+        pass
+
+    def __str__(self):
+        return 'My Global Object'
+
+
+
 class Quiz():
     def __init__(self, n=3):
         self.questions = Question.objects.all()[:n]
@@ -59,7 +60,7 @@ class Quiz():
         list_result = [v.get_correct_answer() == v.user_answer for v in self.questions]
         c_a = list_result.count(True)
         w_a = list_result.count(False)
-        data_result = [c_a, w_a, round(c_a/(c_a + w_a)*100)]
+        data_result = [c_a, w_a, round(c_a / (c_a + w_a) * 100)]
         return [list_result, data_result]
 
 
