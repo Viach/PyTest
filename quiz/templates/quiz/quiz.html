@@ -22,8 +22,10 @@
 <hr>
 <p>{{current_question.dict_answers}}</p>
 <p>{{current_question.answers_order}}</p>
+
 {% for k in current_question.answers_order %}
 <h4>{{k}}=>{{current_question.dict_answers.k}}<== не працює</h4>
+<p>K-{{current_question.answers_order.k}}</p>
 {%endfor%}
 <hr>
 <h4>=>{{current_question.dict_answers.2}}<==  але так, працює</h4>
