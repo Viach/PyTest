@@ -56,7 +56,11 @@ class Quiz():
         return 'Set of Questions'
 
     def result(self):
-        return [v.get_correct_answer() == v.user_answer for v in self.questions]
+        list_result = [v.get_correct_answer() == v.user_answer for v in self.questions]
+        c_a = list_result.count(True)
+        w_a = list_result.count(False)
+        data_result = [c_a, w_a, round(c_a/(c_a + w_a)*100)]
+        return [list_result, data_result]
 
 
 class UsefulLinks(models.Model):

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from datetime import datetime
+
 from .models import Quiz, G
 
 g = G()  # my global variable
@@ -30,6 +32,7 @@ def quiz(request, *args):
             current_question = g.quiz.questions[request.session['current_question']]
             current_question.list_answers = current_question.get_answers()
             current_question.input_type = current_question.get_input_type()
+            current_question.start_time = datetime.now()
             context = {'current_question': current_question,
                        'current_question_number_in_quiz': request.session['current_question'] + 1,
                        'info': 'Quiz in process...',
@@ -46,7 +49,7 @@ def quiz(request, *args):
                                        [dict(a.list_answers)[i] for i in a.get_correct_answer()],
                                        a.user_answer,
                                        a.explanation]
-                                      for r, a in zip(result, g.quiz.questions)],
+                                      for r, a in zip(result[0], g.quiz.questions)],
                    }
         return render(request, 'quiz/quiz_finish.html', context)
     else:

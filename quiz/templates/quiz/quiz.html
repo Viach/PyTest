@@ -16,12 +16,12 @@
     {% for k, v in current_question.list_answers %}
     <h4><input type={{current_question.input_type}} name="user_answer" value={{k}}>{{v}}</h4>
     {% endfor %}
-    <input type="submit" value="Submit">
+    <input type="submit" value="Записати">
 </form>
 
 <hr>
-<form action="{% url 'quiz' 'finish' %}">
-    <input type="submit" value="Cancel Testing">
+<form action="{% url 'quiz' 'start' %}">
+    <input type="submit" value="Припинити тестування">
 </form>
 <hr>
 

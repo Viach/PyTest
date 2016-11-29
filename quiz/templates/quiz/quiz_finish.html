@@ -4,28 +4,39 @@
 {% block content %}
 
 
-<h3>{{result}}</h3>
-<hr>
-<hr>
-{% for r, name, code, correct_answer, user_answer, explanation in questions_answers %}
-<h4>Запитання: {{ name }}</h4>
-    {% if code %}
-    <h3>Code
-        <pre class="code">{{code}}</pre>
-    </h3>
-    {% endif %}
-<p>Результат: {{ r }}</p>
-{% if not r %}
-<p>Ваша відповідь: {{ user_answer }}</p>
-<p>Правильна відповідь:
-    {% for i in correct_answer %}
-    <p>{{i}}</p>
+<p>
+    Результат тесту:{% for r in result.0%}
+{%if r%}<span class="result_answer_true"> T {%else%} </span><span class="result_answer_false">F </span>{%endif%}
     {% endfor %}
 </p>
-<p>Пояснення: {{ explanation }}</p>
-{% endif %}
+Вірно дано відповідь на {{result.1.2}} % запитань.
 <hr>
+
+
+{% for r, name, code, correct_answer, user_answer, explanation in questions_answers %}
+<div class="{% if forloop.counter|divisibleby:2 %} result_line_even {% else %} result_line_odd {% endif %} ">
+    <h4>
+        Запитання: {{ name }}<br>
+        <span class="{%if not r%} result_answer_false  {%else%} result_answer_true {%endif%}">
+            {%if r%} Відповідь: вірна {%else%} Відповідь: невірна{%endif%}
+        </span>
+    </h4>
+    {% if code and not r %}
+    <div>Code
+        <pre class="code">{{code}}</pre>
+    </div>
+    {% endif %}
+    {% if not r %}
+    <div>Правильна відповідь:
+        {% for i in correct_answer %}
+    <div>{{i}}</div>
+    {% endfor %}
+    </div>
+    <div>Пояснення: {{ explanation }}</div>
+    {% endif %}
+</div>
 {% endfor %}
+
 <hr>
 quiz_status {{request.session.quiz_status}}
 {% endblock %}
