@@ -11,9 +11,8 @@
     <h3>Code
         <pre class="code">{{current_question.code}}</pre>
     </h3>
-    {{current_question.list_answers}}
-    {% for v in current_question.list_answers %}
-    <h4><input type={{current_question.input_type}} name="user_answer" value={{v.0}}>{{v.0}} {{v.1}}</h4>
+    {% for k, v in current_question.list_answers %}
+    <h4><input type={{current_question.input_type}} name="user_answer" value={{k}}>{{v}}</h4>
     {% endfor %}
     <input type="submit" value="Submit">
 </form>
