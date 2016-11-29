@@ -4,15 +4,25 @@
 {% block content %}
 
 
-<h2>{{result}}</h2>
-<hr><hr>
-{% for r, name, correct_answer, user_answer, explanation in answer_r_n_c_u_e %}
-<h3>Запитання: {{ name }}</h3>
-<h4>Результат: {{ r }}</h4>
+<h3>{{result}}</h3>
+<hr>
+<hr>
+{% for r, name, code, correct_answer, user_answer, explanation in questions_answers %}
+<h4>Запитання: {{ name }}</h4>
+    {% if code %}
+    <h3>Code
+        <pre class="code">{{code}}</pre>
+    </h3>
+    {% endif %}
+<p>Результат: {{ r }}</p>
 {% if not r %}
-<h4>Ваша відповідь: {{ user_answer }}</h4>
-<h4>Правильна відповідь: {{ correct_answer }}</h4>
-<h4>Пояснення: {{ explanation }}</h4>
+<p>Ваша відповідь: {{ user_answer }}</p>
+<p>Правильна відповідь:
+    {% for i in correct_answer %}
+    <p>{{i}}</p>
+    {% endfor %}
+</p>
+<p>Пояснення: {{ explanation }}</p>
 {% endif %}
 <hr>
 {% endfor %}

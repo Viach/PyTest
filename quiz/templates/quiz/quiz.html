@@ -7,10 +7,12 @@
 <hr>
 <form action="{% url 'quiz' 'next' %}" method="post">
     {% csrf_token %}
-    <h1>Q {{current_question.name}}</h1>
+    <h3>Q {{current_question.name}}</h3>
+    {% if current_question.code %}
     <h3>Code
         <pre class="code">{{current_question.code}}</pre>
     </h3>
+    {% endif %}
     {% for k, v in current_question.list_answers %}
     <h4><input type={{current_question.input_type}} name="user_answer" value={{k}}>{{v}}</h4>
     {% endfor %}

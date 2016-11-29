@@ -49,7 +49,7 @@ class Question(models.Model):
 
 
 class Quiz():
-    def __init__(self, n=2):
+    def __init__(self, n=3):
         self.questions = Question.objects.all()[:n]
 
     def __str__(self):

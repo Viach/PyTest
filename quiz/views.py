@@ -39,10 +39,11 @@ def quiz(request, *args):
         request.session['current_question'] = 0
         result = g.quiz.result()
         context = {'result': result,
-                   'answer_r_n_c_u_e': [  # r_c_u_e -> result, question_name, correct, user, explanation
+                   'questions_answers': [
                                       [r,
                                        a.name,
-                                       a.get_correct_answer(),
+                                       a.code,
+                                       [dict(a.list_answers)[i] for i in a.get_correct_answer()],
                                        a.user_answer,
                                        a.explanation]
                                       for r, a in zip(result, g.quiz.questions)],
