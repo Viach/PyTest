@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
 
-from .models import Quiz, G
+from .models import Quiz, G, CategoryQuestion
 
 g = G()  # my global variable
 
 
 def index(request):
-    context = {'categories': g.categories, }
+    categories = CategoryQuestion.objects.all()
+    context = {'categories': categories, }
     return render(request, 'quiz/index.html', context)
 
 

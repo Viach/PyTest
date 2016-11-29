@@ -12,6 +12,7 @@ class CategoryQuestion(models.Model):
         return self.name
 
 
+
 class Question(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
