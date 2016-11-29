@@ -76,10 +76,12 @@ color: #ffa;
 
 
 .result_line_even {
+padding: 1em 0.7em;
 background-color : #f5f5f5;
 }
 
 .result_line_odd {
+padding: 1em 0.7em;
 background-color : #eee;
 }
 
