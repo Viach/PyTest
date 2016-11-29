@@ -28,6 +28,7 @@ class Question(models.Model):
     category = models.ForeignKey(CategoryQuestion)
     answers = models.TextField()
     correct_answer = models.CharField(max_length=10, validators=[validate_comma_separated_integer_list])
+    explanation = models.TextField(blank=True)
 
     user_answer = None
 
