@@ -49,7 +49,7 @@ class G(object):
 
 
 class Quiz():
-    def __init__(self, n=4):
+    def __init__(self, n=25):
         self.questions = Question.objects.all()[:n]
 
     def __str__(self):

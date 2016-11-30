@@ -14,8 +14,6 @@
         <span class="result_answer_false">не пройдено</span>{%endif%}.
     </p>
 </div>
-<hr>
-
 
 {% for r, name, code, correct_answer, user_answer, explanation in questions_answers %}
 <div class="{% if forloop.counter|divisibleby:2 %} result_line_even {% else %} result_line_odd {% endif %} ">
