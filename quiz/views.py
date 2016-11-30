@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
 
-from .models import Quiz, G, CategoryQuestion
+from .models import Quiz, G, CategoryQuestion, UsefulLinks
 
 g = G()  # my global variable
 
@@ -59,5 +59,5 @@ def quiz(request, *args):
 
 
 def useful_links(request):
-    context = {'var': 'quiz LINKS', }
+    context = {'links': UsefulLinks.objects.all() , }
     return render(request, 'quiz/useful_links.html', context)

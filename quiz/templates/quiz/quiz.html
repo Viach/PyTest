@@ -3,7 +3,7 @@
 
 {% block content %}
 <form action="{% url 'quiz' 'next' %}" method="post">
-    <div class="uk-text-center uk-text-muted uk-text-bold"> Питання {{current_question_number_in_quiz}} із {{number_questions}} питань</div>
+    <div class="title"> Питання {{current_question_number_in_quiz}} із {{number_questions}} питань</div>
     {% csrf_token %}
     <div class="uk-text-large">{{current_question.name}}</div>
     {% if current_question.code %}

@@ -3,10 +3,16 @@
 
 {% block content %}
 
-<h1 class="uk-text-large uk-text-bold uk-text-muted uk-text-center">Корисні лінки</h1>
-    <h1>корисні лінки корисні лінки</h1>
-    <h1>корисні лінки корисні лінки</h1>
-    <h1>корисні лінки корисні лінки</h1><h1>корисні лінки корисні лінки</h1>
-    <h1>корисні лінки корисні лінки</h1><h1>корисні лінки корисні лінки</h1>
-
+<h1 class="title">Корисні лінки</h1>
+<div>
+    {% for link in links %}
+    <div class=" {% if forloop.counter|divisibleby:2 %} result_line_even {% else %} result_line_odd {% endif %} ">
+    <ul>
+    <div class="uk-text-large">    {{link.name}}</div>
+    <div class="">    {{link.description}} </div>
+    <div class="uk-button-link">    <a href="{{link.link}}">{{link.link}}</a></div>
+    </ul>
+    </div>
+    {%endfor%}
+</div>
 {% endblock %}
