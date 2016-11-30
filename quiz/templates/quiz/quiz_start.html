@@ -4,11 +4,14 @@
 {% block content %}
 
 
+<p class="uk-text-large uk-text-bold uk-text-muted uk-text-center">Інформація про тест</p>
 
-<h1>Start quiz?</h1>
-<hr>
-{{info}}
-<hr>
+<pre class="uk-text-left">
+    Набір  завданнь  складається з 2 завдань по кожній категорії.
+    В цілому 20 питань, на які слід відповісти за 15-25 хв.
+    Наразі автоматичний контроль часу проходження тесту ще не реалізовано.
+
+</pre>
 
 <form action="{% url 'quiz' 'next' %}">
     <input class="uk-button-large" type="submit" value="Перейти до тестування">

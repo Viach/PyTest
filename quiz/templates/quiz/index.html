@@ -2,22 +2,23 @@
 {% block title %}загальна інфа про тест{% endblock %}
 
 {% block content %}
-<pre>
-                Тест на знання основ Python
-    Даний тест розрахований на бажаючий перевірити свої знання основ мови програмування Python 3.
+<div class="uk-text-center">
+     <p class="uk-text-large uk-text-bold uk-text-muted uk-text-center">Тест на знання основ Python</p>
+<pre class="uk-text-left">
+    Даний тест розрахований на бажаючих перевірити свої знання основ мови програмування Python 3.
     Завдання відносяться до наступних категорій:
 </pre>
-<ul class="uk-list uk-column-1-2 ">
+<ul class="uk-list uk-column-1-2 uk-text-left">
     {% for c in categories %}
     <ul>{{c.name }}</ul>
     {% endfor %}
 </ul>
-<pre>
-    Набір  завданнь  складається з 2 завдань по кожній категорії.
-    В цілому 20 питань, на які слід відповісти за 15-25 хв.
+<pre class="uk-text-left">
+
     Наразі автоматичний контроль часу проходження тесту ще не реалізовано.
     Тест вважається зданим, якщо вірні відповіді дано не менше, ніж на 80% питань.
 
     Успіхів!
 </pre>
+    </div>
 {% endblock %}

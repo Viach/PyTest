@@ -68,3 +68,6 @@ class UsefulLinks(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     link = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
