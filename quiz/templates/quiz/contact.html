@@ -1,0 +1,24 @@
+{% extends "quiz/base.html" %}
+{% block title %}Контакти{% endblock %}
+
+{% block content %}
+<div class="">
+    <p class="title ">Контакти</p>
+    <div class="uk-text-left" >
+        Даний тест розрахований на бажаючих перевірити свої знання основ мови програмування Python 3.<br>
+        Завдання відносяться до наступних категорій:
+    </div>
+    <ul class="uk-list uk-column-1-2 uk-text-left">
+        {% for c in categories %}
+        <ul>{{c.name }}</ul>
+        {% endfor %}
+    </ul>
+    <div class="uk-text-left">
+
+        Наразі автоматичний контроль часу проходження тесту ще не реалізовано.<br>
+        Тест вважається зданим, якщо вірні відповіді дано не менше, ніж на 80% питань.
+
+        <p>Успіхів!</p>
+    </div>
+</div>
+{% endblock %}

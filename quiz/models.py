@@ -71,3 +71,10 @@ class UsefulLinks(models.Model):
 
     def __str__(self):
         return self.name
+
+class EMail():
+    def __init__(self):
+        self.subject = 'Заголовок'
+
+    def __str__(self):
+        return 'Email from Guest'
