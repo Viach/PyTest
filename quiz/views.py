@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
 
-from .models import Quiz, G, CategoryQuestion, UsefulLinks
+from .models import Quiz, G, CategoryQuestion, UsefulLinks, Question
 
 g = G()  # my global variable
 
 
 def index(request):
     categories = CategoryQuestion.objects.all()
+    categories.length = len(categories)
+    for k,v in enumerate(categories):
+        categories[k].number_questions = len(Question.objects.all().filter(category=v.id))
     context = {'categories': categories, }
     return render(request, 'quiz/index.html', context)
 
@@ -17,7 +20,7 @@ def quiz(request, *args):
     if status == 'start':
         request.session['current_question'] = -1
         g.quiz = Quiz()
-        context = {'info': "INFO about quiz"}
+        context = {'number_questions': len(g.quiz.questions)}
         return render(request, 'quiz/quiz_start.html', context)
     elif status == 'next':
         if 'quiz' not in g.__dict__.keys():

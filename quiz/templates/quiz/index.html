@@ -6,11 +6,11 @@
     <p class="title ">Тест на знання основ Python</p>
     <div class="uk-text-left" >
         Даний тест розрахований на бажаючих перевірити свої знання основ мови програмування Python 3.<br>
-        Завдання відносяться до наступних категорій:
+        Завдання відносяться до {{categories.length}}-ти наступних категорій:
     </div>
     <ul class="uk-list uk-column-1-2 uk-text-left">
         {% for c in categories %}
-        <ul>{{c.name }}</ul>
+        <ul>{{c.name }} ({{c.number_questions}})</ul>
         {% endfor %}
     </ul>
     <div class="uk-text-left">
