@@ -17,7 +17,7 @@ class Question(models.Model):
     description = models.TextField(blank=True)
     code = models.TextField(blank=True)
     category = models.ForeignKey(CategoryQuestion)
-    answers = models.TextField(default='буде помилка / error \nжодне з перелічених / none')
+    answers = models.TextField(default='буде помилка / error \nжодне з перелічених / none of the mentioned')
     correct_answer = models.CharField(max_length=10, validators=[validate_comma_separated_integer_list])
     explanation = models.TextField(blank=True, default='Спробуйте і переконайтеся.')
     enabled = models.BooleanField(default=False)
