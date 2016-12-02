@@ -10,7 +10,7 @@ def index(request):
     categories = CategoryQuestion.objects.all()
     categories.length = len(categories)
     for k,v in enumerate(categories):
-        categories[k].number_questions = len(Question.objects.all().filter(category=v.id))
+        categories[k].number_questions = len(Question.objects.all().filter(enabled = True).filter(category=v.id))
     context = {'categories': categories, }
     return render(request, 'quiz/index.html', context)
 
