@@ -20,6 +20,7 @@ class Question(models.Model):
     answers = models.TextField()
     correct_answer = models.CharField(max_length=10, validators=[validate_comma_separated_integer_list])
     explanation = models.TextField(blank=True)
+    enabled = models.BooleanField(default=False)
 
     user_answer = None
 
@@ -50,7 +51,7 @@ class G(object):
 
 class Quiz():
     def __init__(self, n=25):
-        self.questions = Question.objects.all()[:n]
+        self.questions = Question.objects.all().filter(enabled=True)[:n]
 
     def __str__(self):
         return 'Set of Questions'
