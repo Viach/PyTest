@@ -64,3 +64,7 @@ def quiz(request, *args):
 def useful_links(request):
     context = {'links': UsefulLinks.objects.all() , }
     return render(request, 'quiz/useful_links.html', context)
+
+def contact(request):
+    context = {'info': 'contact', }
+    return render(request, 'quiz/contact.html', context)
