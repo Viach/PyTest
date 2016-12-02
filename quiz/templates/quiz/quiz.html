@@ -7,7 +7,7 @@
     {% csrf_token %}
     <div class="uk-text-large">{{current_question.name}}</div>
     {% if current_question.code %}
-    <div>Code
+    <div>
         <pre class="code">{{current_question.code}}</pre>
     </div>
     {% endif %}

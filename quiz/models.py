@@ -50,8 +50,15 @@ class G(object):
 
 
 class Quiz():
-    def __init__(self, n=25):
-        self.questions = Question.objects.all().filter(enabled=True)[:n]
+    def __init__(self):
+        # self.questions = Question.objects.all().filter(enabled=True)
+        self.questions = []
+        self.categories = CategoryQuestion.objects.all()
+        for category in self.categories:
+            lst = list(Question.objects.all().filter(enabled=True).filter(category=category.id))
+            shuffle(lst)
+            self.questions.extend(lst[-2:])
+
 
     def __str__(self):
         return 'Set of Questions'
@@ -72,6 +79,7 @@ class UsefulLinks(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class EMail():
     def __init__(self):
