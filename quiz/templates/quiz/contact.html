@@ -10,16 +10,9 @@
     <form id="mail" class="uk-form" action="{% url 'contact' %}" method="post">
         {% csrf_token %}
         <ul class="uk-list uk-list-striped ">
-            <li>
-                <input class="uk-form-width-large" type="text" name="mail_subject" value="{{mail.subject}}">
-            </li>
-            <li>
-                <textarea name="mail_body" form="mail" rows="10" cols="100">{{mail.body}}</textarea>
-
-            </li>
-                        <li>
-                А скільки буде:  8 + (-2): <input type="text" name="ban_spam" value=''>
-            </li>
+            <li><input class="uk-form-width-large" type="text" name="mail_subject" value="{{mail.subject}}"></li>
+            <li><textarea name="mail_body" form="mail" rows="10" cols="100">{{mail.body}}</textarea></li>
+            <li> А скільки буде: 8 + (-2): <input type="text" name="ban_spam" value=''></li>
         </ul>
         <input class="uk-button-large" type="submit" value="Відправити">
     </form>
