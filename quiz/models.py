@@ -59,7 +59,6 @@ class Quiz():
             shuffle(lst)
             self.questions.extend(lst[-2:])
 
-
     def __str__(self):
         return 'Set of Questions'
 

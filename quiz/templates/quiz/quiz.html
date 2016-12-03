@@ -11,9 +11,13 @@
         <pre class="code">{{current_question.code}}</pre>
     </div>
     {% endif %}
-    {% for k, v in current_question.list_answers %}
-    <ul class="uk-list-space"><input type={{current_question.input_type}} name="user_answer" value={{k}}>{{v}}</ul>
-    {% endfor %}
+    <ul class="uk-list uk-list-striped ">
+        {% for k, v in current_question.list_answers %}
+        <li><input type="{{current_question.input_type}}"
+                   name="user_answer" value={{k}}>{{v}}
+        </li>
+        {% endfor %}
+    </ul>
     <input class="uk-button-large" type="submit" value="Записати">
 </form>
 

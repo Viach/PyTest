@@ -8,3 +8,4 @@ urlpatterns = [
     url(r'^useful_links', views.useful_links, name='useful_links'),
     url(r'^contact', views.contact, name='contact'),
 ]
+

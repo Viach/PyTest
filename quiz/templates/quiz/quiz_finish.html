@@ -23,8 +23,8 @@
             {%if r%} Відповідь: вірна {%else%} Відповідь: невірна{%endif%}
         </span>
     </h4>
-    {% if code and not r %}
-    <div>Code
+    {% if code %}
+    <div>
         <pre class="code">{{code}}</pre>
     </div>
     {% endif %}

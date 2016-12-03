@@ -4,15 +4,15 @@
 {% block content %}
 
 <h1 class="title">Корисні лінки</h1>
-<div>
+<ul class="uk-list uk-list-striped uk-list-space">
     {% for link in links %}
-    <div class=" {% if forloop.counter|divisibleby:2 %} result_line_even {% else %} result_line_odd {% endif %} ">
-    <ul>
-    <div class="uk-text-large">    {{link.name}}</div>
-    <div class="">    {{link.description}} </div>
-    <div class="uk-button-link">    <a href="{{link.link}}">{{link.link}}</a></div>
-    </ul>
-    </div>
+    <li>
+
+        <div class="uk-text-large"> {{link.name}}</div>
+        <div class=""> {{link.description}}</div>
+        <div class="uk-button-link"><a href="{{link.link}}">{{link.link}}</a></div>
+
+    </li>
     {%endfor%}
-</div>
+</ul>
 {% endblock %}

@@ -9,8 +9,8 @@ g = G()  # my global variable
 def index(request):
     categories = CategoryQuestion.objects.all()
     categories.length = len(categories)
-    for k,v in enumerate(categories):
-        categories[k].number_questions = len(Question.objects.all().filter(enabled = True).filter(category=v.id))
+    for k, v in enumerate(categories):
+        categories[k].number_questions = len(Question.objects.all().filter(enabled=True).filter(category=v.id))
     context = {'categories': categories, }
     return render(request, 'quiz/index.html', context)
 
@@ -47,13 +47,13 @@ def quiz(request, *args):
         result = g.quiz.result()
         context = {'result': result,
                    'questions_answers': [
-                                      [r,
-                                       a.name,
-                                       a.code,
-                                       [dict(a.list_answers)[i] for i in a.get_correct_answer()],
-                                       a.user_answer,
-                                       a.explanation]
-                                      for r, a in zip(result[0], g.quiz.questions)],
+                       [r,
+                        a.name,
+                        a.code,
+                        [dict(a.list_answers)[i] for i in a.get_correct_answer()],
+                        a.user_answer,
+                        a.explanation]
+                       for r, a in zip(result[0], g.quiz.questions)],
                    }
         return render(request, 'quiz/quiz_finish.html', context)
     else:
@@ -62,8 +62,9 @@ def quiz(request, *args):
 
 
 def useful_links(request):
-    context = {'links': UsefulLinks.objects.all() , }
+    context = {'links': UsefulLinks.objects.all(), }
     return render(request, 'quiz/useful_links.html', context)
+
 
 def contact(request):
     context = {'info': 'contact', }
