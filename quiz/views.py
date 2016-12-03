@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.mail import EmailMessage
 from datetime import datetime
 
 from .models import Quiz, G, CategoryQuestion, UsefulLinks, Question
@@ -67,5 +68,16 @@ def useful_links(request):
 
 
 def contact(request):
-    context = {'info': 'contact', }
+    if len(request._get_post()):  # email is not empty
+        g.mail.send(fail_silently=False)
+        return redirect('index')
+    g.mail = EmailMessage(
+        'Hello',
+        'Body goes here',
+        'from@example.com',
+        ['vch.380@gmail.com', ],
+        reply_to=['another@example.com'],
+        # headers={'Message-ID': 'foo'},
+    )
+    context = {'mail': g.mail, }
     return render(request, 'quiz/contact.html', context)

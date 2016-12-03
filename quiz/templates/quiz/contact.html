@@ -4,12 +4,24 @@
 {% block content %}
 <div class="">
     <p class="title ">Контакти</p>
-    <div class="uk-text-left" >
+    <div class="uk-text-left">
         Заваження, пропозиції та побажання прошу надсилати через наведену нижче форму:
     </div>
+    <form id="mail" action="{% url 'contact' %}" method="post">
+        {% csrf_token %}
+        <ul class="uk-list uk-list-striped ">
+            <li>
+                <input type="" name="mail_subject" value={{mail.subject}}>
+            </li>
+            <li>
+                <textarea name="mail_body" form="mail" rows="10" cols="100">{{mail.body}}</textarea>
 
+            </li>
+        </ul>
+        <input class="uk-button-large" type="submit" value="Відправити">
+    </form>
     <div class="uk-text-left">
-        <p>Успіхів!</p>
+
     </div>
 </div>
 {% endblock %}
