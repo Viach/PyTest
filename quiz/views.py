@@ -68,16 +68,19 @@ def useful_links(request):
 
 
 def contact(request):
-    if len(request._get_post()):  # email is not empty
+    r = request._get_post()
+    if len(r) and r['ban_spam'] == '6':  # email is not empty
+        g.mail = EmailMessage(
+            r['mail_subject'],
+            r['mail_body'],
+            'from@example.com',
+            ['vch.380@gmail.com', ],
+            reply_to=['another@example.com'],
+            # headers={'Message-ID': 'foo'},
+        )
+
         g.mail.send(fail_silently=False)
         return redirect('index')
-    g.mail = EmailMessage(
-        'Hello',
-        'Body goes here',
-        'from@example.com',
-        ['vch.380@gmail.com', ],
-        reply_to=['another@example.com'],
-        # headers={'Message-ID': 'foo'},
-    )
+    g.mail = {'subject':'Вітаю... тут пишемо заголовок повідомлення', 'body':'А тут текст листа...',}
     context = {'mail': g.mail, }
     return render(request, 'quiz/contact.html', context)
