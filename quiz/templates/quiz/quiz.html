@@ -2,6 +2,27 @@
 {% block title %}власне сам тест{% endblock %}
 
 {% block content %}
+<div class='countdown'>
+    <div id="clockdiv">
+        <div >
+            <span class="days"></span>
+            <div class="smalltext">Days</div>
+        </div>
+        <div>
+            <span class="hours"></span>
+            <div class="smalltext">Hours</div>
+        </div>
+        <div>
+            <span class="minutes"></span>
+            <div class="smalltext">Minutes</div>
+        </div>
+        <div>
+            <span class="seconds"></span>
+            <div class="smalltext">Seconds</div>
+        </div>
+    </div>
+</div>
+
 <form action="{% url 'quiz' 'next' %}" method="post">
     <div class="title"> Питання {{current_question_number_in_quiz}} із {{number_questions}} питань</div>
     {% csrf_token %}
@@ -22,6 +43,7 @@
 </form>
 
 <hr>
+
 
 
 {% endblock %}
