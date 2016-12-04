@@ -23,13 +23,18 @@ function initializeClock(id, endtime) {
   function updateClock() {
     var t = getTimeRemaining(endtime);
 
-    daysSpan.innerHTML = t.days;
+    //daysSpan.innerHTML = t.days;
     hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
     secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
 
     if (t.total <= 0) {
       clearInterval(timeinterval);
+      document.getElementById("clockdiv").style.color = 'red';
+      document.getElementById("clockdiv").innerHTML = 'Час вичерпано';
+    }
+    if (t.total ==  60 * 1000){
+      document.getElementById("seconds").style.color = 'red';
     }
   }
 
@@ -37,5 +42,8 @@ function initializeClock(id, endtime) {
   var timeinterval = setInterval(updateClock, 1000);
 }
 
-var deadline = new Date(Date.parse(new Date()) + 60 * 60 * 1000);
+if (top.location.pathname == "/quiz/quiz/next"){
+var number_questions = document.getElementById("number_questions");
+var deadline = new Date(Date.parse(new Date()) + number_questions.innerHTML *  60 * 1000);
 initializeClock('clockdiv', deadline);
+}

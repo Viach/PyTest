@@ -2,51 +2,50 @@
 {% block title %}власне сам тест{% endblock %}
 
 {% block content %}
-<div class='countdown'>
-    <div id="clockdiv">
-        <div >
-            <span class="days"></span>
-            <div class="smalltext">Days</div>
-        </div>
-        <div>
-            <span class="hours"></span>
-            <div class="smalltext">Hours</div>
-        </div>
-        <div>
-            <span class="minutes"></span>
-            <div class="smalltext">Minutes</div>
-        </div>
-        <div>
-            <span class="seconds"></span>
-            <div class="smalltext">Seconds</div>
-        </div>
+<div class="uk-grid">
+    <div class="uk-width-8-10">
+        <form action="{% url 'quiz' 'next' %}" method="post">
+            <div class="title"> Питання {{current_question_number_in_quiz}} із <span
+                    id="number_questions">{{number_questions}}</span> питань
+            </div>
+            {% csrf_token %}
+            <div class="uk-text-large">{{current_question.name}}</div>
+            {% if current_question.code %}
+            <div>
+                <pre class="code">{{current_question.code}}</pre>
+            </div>
+            {% endif %}
+            <ul class="uk-list uk-list-striped ">
+                {% for k, v in current_question.list_answers %}
+                <li><input type="{{current_question.input_type}}"
+                           name="user_answer" value={{k}}>{{v}}
+                </li>
+                {% endfor %}
+            </ul>
+            <input class="uk-button-large" type="submit" value="Записати">
+        </form>
+
     </div>
+    <div class='countdown uk-width-2-10 uk-flex uk-flex-middle uk-flex-column uk-flex-space-between'>
+        <div id="clockdiv" >
+            <div>
+                <span class="hours"></span>
+            </div>
+            <div>
+                <span class="minutes"></span>
+            </div>
+            <div>
+                <span id="seconds" class="seconds"></span>
+            </div>
+        </div>
+        <form  action="{% url 'quiz' 'finish' %}" method="post">
+            {% csrf_token %}
+            <input class="uk-button-large" type="submit" value="Завершити тест">
+        </form>
+    </div>
+
 </div>
-
-<form action="{% url 'quiz' 'next' %}" method="post">
-    <div class="title"> Питання {{current_question_number_in_quiz}} із {{number_questions}} питань</div>
-    {% csrf_token %}
-    <div class="uk-text-large">{{current_question.name}}</div>
-    {% if current_question.code %}
-    <div>
-        <pre class="code">{{current_question.code}}</pre>
-    </div>
-    {% endif %}
-    <ul class="uk-list uk-list-striped ">
-        {% for k, v in current_question.list_answers %}
-        <li><input type="{{current_question.input_type}}"
-                   name="user_answer" value={{k}}>{{v}}
-        </li>
-        {% endfor %}
-    </ul>
-    <input class="uk-button-large" type="submit" value="Записати">
-</form>
-<form action="{% url 'quiz' 'finish' %}" method="post">
-    {% csrf_token %}
-    <input class="uk-button-large" type="submit" value="Завершити тест">
-</form>
 <hr>
-
 
 
 {% endblock %}
