@@ -44,8 +44,8 @@ def quiz(request, *args):
                        }
             return render(request, 'quiz/quiz.html', context)
     elif status == 'finish':
-        request.session['current_question'] = 0
         result = g.quiz.result()
+        result[0]=result[0][:request.session['current_question']]
         context = {'result': result,
                    'questions_answers': [
                        [r,
@@ -54,8 +54,9 @@ def quiz(request, *args):
                         [dict(a.list_answers)[i] for i in a.get_correct_answer()],
                         a.user_answer,
                         a.explanation]
-                       for r, a in zip(result[0], g.quiz.questions)],
+                       for r, a in zip(result[0], g.quiz.questions[:request.session['current_question']])],
                    }
+        request.session['current_question'] = 0
         return render(request, 'quiz/quiz_finish.html', context)
     else:
         context = {'info': 'ERROR', }

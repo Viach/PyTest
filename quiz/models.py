@@ -66,8 +66,9 @@ class Quiz():
         list_result = [v.get_correct_answer() == v.user_answer for v in self.questions]
         c_a = list_result.count(True)
         w_a = list_result.count(False)
-        k = round(c_a / (c_a + w_a) * 100)
-        data_result = [c_a, w_a, k, k >= 80]
+        n_a = c_a + w_a
+        k = round(c_a / n_a * 100)
+        data_result = [c_a, w_a, n_a, k, k >= 80]
         return [list_result, data_result]
 
 
