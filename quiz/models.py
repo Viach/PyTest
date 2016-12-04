@@ -22,7 +22,7 @@ class Question(models.Model):
     explanation = models.TextField(blank=True, default='Спробуйте і переконайтеся.')
     enabled = models.BooleanField(default=False)
 
-    user_answer = None
+    user_answer = {None}
 
     def __str__(self):
         return self.name
@@ -54,7 +54,7 @@ class Quiz():
         # self.questions = Question.objects.all().filter(enabled=True)
         self.questions = []
         self.categories = CategoryQuestion.objects.all()
-        for category in self.categories:
+        for category in self.categories[:2]:
             lst = list(Question.objects.all().filter(enabled=True).filter(category=category.id))
             shuffle(lst)
             self.questions.extend(lst[-2:])

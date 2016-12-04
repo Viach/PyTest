@@ -41,7 +41,11 @@
     </ul>
     <input class="uk-button-large" type="submit" value="Записати">
 </form>
-
+<form action="{% url 'quiz' 'finish' %}" method="post">
+    {% csrf_token %}
+    <input name="user_answer" value='None'>
+    <input class="uk-button-large" type="submit" value="Завершити тест">
+</form>
 <hr>
 
 
