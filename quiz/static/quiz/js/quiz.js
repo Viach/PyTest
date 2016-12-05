@@ -42,13 +42,13 @@ function initializeClock(id, endtime) {
   var timeinterval = setInterval(updateClock, 1000);
 }
 
-if (top.location.pathname == "/quiz/quiz/next" && document.getElementById("current_question_number_in_quiz").innerHTML == '1'){
+if (top.location.pathname == "/quiz/next" && document.getElementById("current_question_number_in_quiz").innerHTML == '1'){
 var number_questions = document.getElementById("number_questions");
 var deadline = new Date(Date.parse(new Date()) + number_questions.innerHTML *  60 * 1000);
 localStorage.setItem("deadline", deadline);
 initializeClock('clockdiv', deadline);
 }
-else if (top.location.pathname == "/quiz/quiz/next" && document.getElementById("current_question_number_in_quiz").innerHTML != '1'){
+else if (top.location.pathname == "/quiz/next" && document.getElementById("current_question_number_in_quiz").innerHTML != '1'){
 var deadline = localStorage.getItem("deadline");
 initializeClock('clockdiv', deadline);
 }
