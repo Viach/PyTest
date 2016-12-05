@@ -21,6 +21,7 @@ def quiz(request, *args):
     if status == 'start':
         request.session['current_question'] = -1
         g.quiz = Quiz()
+        g.quiz.start_time = datetime.now()
         context = {'number_questions': len(g.quiz.questions)}
         return render(request, 'quiz/quiz_start.html', context)
     elif status == 'next':
@@ -37,7 +38,6 @@ def quiz(request, *args):
             current_question = g.quiz.questions[request.session['current_question']]
             current_question.list_answers = current_question.get_answers()
             current_question.input_type = current_question.get_input_type()
-            current_question.start_time = datetime.now()
             context = {'current_question': current_question,
                        'current_question_number_in_quiz': request.session['current_question'] + 1,
                        'number_questions': len(g.quiz.questions),
@@ -45,7 +45,7 @@ def quiz(request, *args):
             return render(request, 'quiz/quiz.html', context)
     elif status == 'finish':
         result = g.quiz.result()
-        result[0]=result[0][:request.session['current_question']]
+        result[0] = result[0][:request.session['current_question']]
         context = {'result': result,
                    'questions_answers': [
                        [r,
@@ -55,6 +55,7 @@ def quiz(request, *args):
                         a.user_answer,
                         a.explanation]
                        for r, a in zip(result[0], g.quiz.questions[:request.session['current_question']])],
+                   'quiz_time': (datetime.now() - g.quiz.start_time).__str__().split('.')[0],
                    }
         request.session['current_question'] = 0
         return render(request, 'quiz/quiz_finish.html', context)
