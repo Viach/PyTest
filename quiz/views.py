@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from .models import Quiz, G, CategoryQuestion, UsefulLinks, Question
 
@@ -44,6 +44,11 @@ def quiz(request, *args):
                        }
             return render(request, 'quiz/quiz.html', context)
     elif status == 'finish':
+        if 'quiz' not in g.__dict__.keys():
+            return redirect('quiz', 'start')
+        g.quiz.stop_time = datetime.now()
+        g.quiz.time_delta = g.quiz.stop_time - g.quiz.start_time - timedelta(
+            seconds=2)  # correction for time delay  with js-contdown in template
         result = g.quiz.result()
         result[0] = result[0][:request.session['current_question']]
         context = {'result': result,
@@ -55,7 +60,7 @@ def quiz(request, *args):
                         a.user_answer,
                         a.explanation]
                        for r, a in zip(result[0], g.quiz.questions[:request.session['current_question']])],
-                   'quiz_time': (datetime.now() - g.quiz.start_time).__str__().split('.')[0],
+                   'quiz_time': g.quiz.time_delta.__str__().split('.')[0],
                    }
         request.session['current_question'] = 0
         return render(request, 'quiz/quiz_finish.html', context)
