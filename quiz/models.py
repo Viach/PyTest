@@ -51,7 +51,6 @@ class G(object):
 
 class Quiz():
     def __init__(self):
-        # self.questions = Question.objects.all().filter(enabled=True)
         self.questions = []
         self.categories = CategoryQuestion.objects.all()
         for category in self.categories:
@@ -64,8 +63,8 @@ class Quiz():
 
     def result(self):
         list_result = [v.get_correct_answer() == v.user_answer for v in self.questions]
-        c_a = list_result.count(True)
-        w_a = list_result.count(False)
+        c_a = list_result.count(True)   # correct answers
+        w_a = list_result.count(False)  # wrong answers
         n_a = c_a + w_a
         k = round(c_a / n_a * 100)
         data_result = [c_a, w_a, n_a, k, k >= 80]
