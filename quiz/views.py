@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
 from datetime import datetime, timedelta
 
-from .models import Quiz, G, CategoryQuestion, UsefulLinks, Question
+from .models import Quiz, S, CategoryQuestion, UsefulLinks, Question
 
-g = G()  # my global variable
+s = S()  # my session
 
 
 def index(request):
@@ -17,42 +17,41 @@ def index(request):
 
 
 def quiz(request, *args):
-    global g
     status = args[0]
     if status == 'start':
-        g.quiz = Quiz()
-        g.quiz.current_number_question = -1
-        g.quiz.start_time = datetime.now()
-        context = {'number_questions': len(g.quiz.questions)}
+        s.quiz = Quiz()
+        s.quiz.current_number_question = -1
+        s.quiz.start_time = datetime.now()
+        context = {'number_questions': len(s.quiz.questions)}
         return render(request, 'quiz/quiz_start.html', context)
     elif status == 'next':
-        print(g.__dict__.keys())
-        if 'quiz' not in g.__dict__.keys():
+        print(s.__dict__.keys())
+        if 'quiz' not in s.__dict__.keys():
             return redirect('quiz', 'start')
-        if g.quiz.current_number_question >= 0:
-            g.quiz.questions[g.quiz.current_number_question].user_answer = set(
+        if s.quiz.current_number_question >= 0:
+            s.quiz.questions[s.quiz.current_number_question].user_answer = set(
                 int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
 
-        g.quiz.current_number_question += 1
-        if g.quiz.current_number_question > len(g.quiz.questions) - 1:
+        s.quiz.current_number_question += 1
+        if s.quiz.current_number_question > len(s.quiz.questions) - 1:
             return redirect('quiz', 'finish')
         else:
-            current_question = g.quiz.questions[g.quiz.current_number_question]
+            current_question = s.quiz.questions[s.quiz.current_number_question]
             current_question.list_answers = current_question.get_answers()
             current_question.input_type = current_question.get_input_type()
             context = {'current_question': current_question,
-                       'current_question_number_in_quiz': g.quiz.current_number_question + 1,
-                       'number_questions': len(g.quiz.questions),
+                       'current_question_number_in_quiz': s.quiz.current_number_question + 1,
+                       'number_questions': len(s.quiz.questions),
                        }
             return render(request, 'quiz/quiz.html', context)
     elif status == 'finish':
-        if 'quiz' not in g.__dict__.keys():
+        if 'quiz' not in s.__dict__.keys():
             return redirect('quiz', 'start')
-        g.quiz.stop_time = datetime.now()
-        g.quiz.time_delta = g.quiz.stop_time - g.quiz.start_time - timedelta(
+        s.quiz.stop_time = datetime.now()
+        s.quiz.time_delta = s.quiz.stop_time - s.quiz.start_time - timedelta(
             seconds=2)  # correction for time delay  with js-contdown in template
-        result = g.quiz.result()
-        result[0] = result[0][:g.quiz.current_number_question]
+        result = s.quiz.result()
+        result[0] = result[0][:s.quiz.current_number_question]
         context = {'result': result,
                    'questions_answers': [
                        [r,
@@ -61,11 +60,11 @@ def quiz(request, *args):
                         [dict(a.list_answers)[i] for i in a.get_correct_answer()],
                         a.user_answer,
                         a.explanation]
-                       for r, a in zip(result[0], g.quiz.questions[:g.quiz.current_number_question])],
-                   'quiz_time': g.quiz.time_delta.__str__().split('.')[0],
+                       for r, a in zip(result[0], s.quiz.questions[:s.quiz.current_number_question])],
+                   'quiz_time': s.quiz.time_delta.__str__().split('.')[0],
                    }
-        g.quiz.current_number_question = 0
-        del g.quiz
+        s.quiz.current_number_question = 0
+        del s.quiz
         return render(request, 'quiz/quiz_finish.html', context)
     else:
         context = {'info': 'ERROR', }
@@ -78,10 +77,9 @@ def useful_links(request):
 
 
 def contact(request):
-    global g
     r = request._get_post()
     if len(r) and r['ban_spam'] == '6':  # email is not empty and should be send
-        g.mail = EmailMessage(
+        s.mail = EmailMessage(
             r['mail_subject'],
             r['mail_body'],
             'from@pytest.debos.net',
@@ -89,9 +87,9 @@ def contact(request):
             reply_to=['another@example.com'],
             # headers={'Message-ID': 'foo'},
         )
-        g.mail.send(fail_silently=False)
-        del g.mail
+        s.mail.send(fail_silently=False)
+        del s.mail
         return redirect('index')
-    g.mail = {'subject': 'Вітаю... тут пишемо заголовок повідомлення', 'body': 'А тут текст листа...', }
-    context = {'mail': g.mail, }
+    s.mail = {'subject': 'Вітаю... тут пишемо заголовок повідомлення', 'body': 'А тут текст листа...', }
+    context = {'mail': s.mail, }
     return render(request, 'quiz/contact.html', context)

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.sessions.models import Session
 from  django.core.validators import validate_comma_separated_integer_list
 
 from  random import shuffle
@@ -40,13 +41,13 @@ class Question(models.Model):
         return 'radio' if len(self.get_correct_answer()) == 1 else 'checkbox'
 
 
-class G(object):
+class S(Session):
     def __init__(self):
         # delete all children for G class
         pass
 
     def __str__(self):
-        return 'My Global Object'
+        return 'My Session Object'
 
 
 class Quiz():
