@@ -63,6 +63,7 @@ def quiz(request, *args):
                    'quiz_time': g.quiz.time_delta.__str__().split('.')[0],
                    }
         request.session['current_question'] = 0
+        del g.quiz
         return render(request, 'quiz/quiz_finish.html', context)
     else:
         context = {'info': 'ERROR', }
@@ -86,6 +87,7 @@ def contact(request):
             # headers={'Message-ID': 'foo'},
         )
         g.mail.send(fail_silently=False)
+        del g.mail
         return redirect('index')
     g.mail = {'subject': 'Вітаю... тут пишемо заголовок повідомлення', 'body': 'А тут текст листа...', }
     context = {'mail': g.mail, }
