@@ -17,6 +17,7 @@ def index(request):
 
 
 def quiz(request, *args):
+    global g
     status = args[0]
     if status == 'start':
         g.quiz = Quiz()
@@ -77,6 +78,7 @@ def useful_links(request):
 
 
 def contact(request):
+    global g
     r = request._get_post()
     if len(r) and r['ban_spam'] == '6':  # email is not empty and should be send
         g.mail = EmailMessage(
