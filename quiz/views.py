@@ -19,27 +19,27 @@ def index(request):
 def quiz(request, *args):
     status = args[0]
     if status == 'start':
-        request.session['current_question'] = -1
         g.quiz = Quiz()
+        g.quiz.current_number_question = -1
         g.quiz.start_time = datetime.now()
         context = {'number_questions': len(g.quiz.questions)}
         return render(request, 'quiz/quiz_start.html', context)
     elif status == 'next':
         if 'quiz' not in g.__dict__.keys():
             return redirect('quiz', 'start')
-        if request.session['current_question'] >= 0:
-            g.quiz.questions[request.session['current_question']].user_answer = set(
+        if g.quiz.current_number_question >= 0:
+            g.quiz.questions[g.quiz.current_number_question].user_answer = set(
                 int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
 
-        request.session['current_question'] += 1
-        if request.session['current_question'] > len(g.quiz.questions) - 1:
+        g.quiz.current_number_question += 1
+        if g.quiz.current_number_question > len(g.quiz.questions) - 1:
             return redirect('quiz', 'finish')
         else:
-            current_question = g.quiz.questions[request.session['current_question']]
+            current_question = g.quiz.questions[g.quiz.current_number_question]
             current_question.list_answers = current_question.get_answers()
             current_question.input_type = current_question.get_input_type()
             context = {'current_question': current_question,
-                       'current_question_number_in_quiz': request.session['current_question'] + 1,
+                       'current_question_number_in_quiz': g.quiz.current_number_question + 1,
                        'number_questions': len(g.quiz.questions),
                        }
             return render(request, 'quiz/quiz.html', context)
@@ -50,7 +50,7 @@ def quiz(request, *args):
         g.quiz.time_delta = g.quiz.stop_time - g.quiz.start_time - timedelta(
             seconds=2)  # correction for time delay  with js-contdown in template
         result = g.quiz.result()
-        result[0] = result[0][:request.session['current_question']]
+        result[0] = result[0][:g.quiz.current_number_question]
         context = {'result': result,
                    'questions_answers': [
                        [r,
@@ -59,10 +59,10 @@ def quiz(request, *args):
                         [dict(a.list_answers)[i] for i in a.get_correct_answer()],
                         a.user_answer,
                         a.explanation]
-                       for r, a in zip(result[0], g.quiz.questions[:request.session['current_question']])],
+                       for r, a in zip(result[0], g.quiz.questions[:g.quiz.current_number_question])],
                    'quiz_time': g.quiz.time_delta.__str__().split('.')[0],
                    }
-        request.session['current_question'] = 0
+        g.quiz.current_number_question = 0
         del g.quiz
         return render(request, 'quiz/quiz_finish.html', context)
     else:
