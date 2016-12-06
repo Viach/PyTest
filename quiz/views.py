@@ -25,6 +25,7 @@ def quiz(request, *args):
         context = {'number_questions': len(g.quiz.questions)}
         return render(request, 'quiz/quiz_start.html', context)
     elif status == 'next':
+        print(g.__dict__.keys())
         if 'quiz' not in g.__dict__.keys():
             return redirect('quiz', 'start')
         if g.quiz.current_number_question >= 0:
