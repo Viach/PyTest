@@ -4,7 +4,7 @@
 {% block content %}
 <div class="uk-grid">
     <div class="uk-width-8-10">
-        <form action="{% url 'quiz' 'next' %}" method="post">
+        <form action="{% url 'quiz_process' %}" method="post">
             <div class="title"> Питання  <span id="current_question_number_in_quiz">{{current_question_number_in_quiz}}</span> із <span
                     id="number_questions">{{number_questions}}</span> питань
             </div>
@@ -38,7 +38,7 @@
                 <span id="seconds" class="seconds"></span>
             </div>
         </div>
-        <form  action="{% url 'quiz' 'finish' %}" method="post">
+        <form  action="{% url 'quiz_finish' %}" method="post">
             {% csrf_token %}
             <input class="uk-button-large" type="submit" value="Перервати тест">
         </form>

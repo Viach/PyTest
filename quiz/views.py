@@ -6,6 +6,7 @@ from .models import Quiz, S, CategoryQuestion, UsefulLinks, Question
 
 s = S()  # my session
 
+
 def index(request):
     categories = CategoryQuestion.objects.all()
     categories.length = len(categories)
@@ -15,59 +16,56 @@ def index(request):
     return render(request, 'quiz/index.html', context)
 
 
-def quiz(request, *args):
-    status = args[0]
-    print('\n   status:', status)
-    if status == 'start':
-        s.quiz = Quiz()
-        print('\n             s.quiz created. length:', s.quiz.questions.__len__(), '   dict:', s.__dict__.keys(), '\n')
-        context = {'number_questions': len(s.quiz.questions)}
-        return render(request, 'quiz/quiz_start.html', context)
-    elif status == 'next':
-        print('s.quiz.current_number_question: ', s.quiz.current_number_question, s.__dict__.keys())
-        if 'quiz' not in s.__dict__.keys():
-            return redirect('quiz', 'start')
-        if s.quiz.current_number_question >= 0:
-            s.quiz.questions[s.quiz.current_number_question].user_answer = set(
-                int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
+def quiz_start(request):
+    s.quiz = Quiz()
+    context = {'number_questions': len(s.quiz.questions)}
+    return render(request, 'quiz/quiz_start.html', context)
 
-        s.quiz.current_number_question += 1
-        if s.quiz.current_number_question > len(s.quiz.questions) - 1:
-            return redirect('quiz', 'finish')
-        else:
-            current_question = s.quiz.questions[s.quiz.current_number_question]
-            current_question.list_answers = current_question.get_answers()
-            current_question.input_type = current_question.get_input_type()
-            context = {'current_question': current_question,
-                       'current_question_number_in_quiz': s.quiz.current_number_question + 1,
-                       'number_questions': len(s.quiz.questions),
-                       }
-            return render(request, 'quiz/quiz.html', context)
-    elif status == 'finish':
-        if 'quiz' not in s.__dict__.keys():
-            return redirect('quiz', 'start')
-        s.quiz.stop_time = datetime.now()
-        s.quiz.time_delta = s.quiz.stop_time - s.quiz.start_time - timedelta(
-            seconds=2)  # correction for time delay  with js-contdown in template
-        result = s.quiz.result()
-        result[0] = result[0][:s.quiz.current_number_question]
-        context = {'result': result,
-                   'questions_answers': [
-                       [r,
-                        a.name,
-                        a.code,
-                        [dict(a.list_answers)[i] for i in a.get_correct_answer()],
-                        a.user_answer,
-                        a.explanation]
-                       for r, a in zip(result[0], s.quiz.questions[:s.quiz.current_number_question])],
-                   'quiz_time': s.quiz.time_delta.__str__().split('.')[0],
-                   }
-        s.quiz.current_number_question = 0
-        del s.quiz
-        return render(request, 'quiz/quiz_finish.html', context)
+
+def quiz_process(request):
+    if 'quiz' not in s.__dict__.keys():
+        return redirect('quiz_start')
+    if s.quiz.current_number_question >= 0:  # write user answer for previous  question
+        s.quiz.questions[s.quiz.current_number_question].user_answer = set(
+            int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
+
+    s.quiz.current_number_question += 1
+    if s.quiz.current_number_question > len(s.quiz.questions) - 1:
+        return redirect('quiz_finish')
     else:
-        context = {'info': 'ERROR', }
-        return render(request, 'quiz/quiz.html', context)
+        current_question = s.quiz.questions[s.quiz.current_number_question]
+        current_question.list_answers = current_question.get_answers()
+        current_question.input_type = current_question.get_input_type()
+        context = {'current_question': current_question,
+                   'current_question_number_in_quiz': s.quiz.current_number_question + 1,
+                   'number_questions': len(s.quiz.questions),
+                   }
+        return render(request, 'quiz/quiz_process.html', context)
+
+
+def quiz_finish(request):
+    if 'quiz' not in s.__dict__.keys():
+        return redirect('quiz_start')
+    s.quiz.stop_time = datetime.now()
+    s.quiz.time_delta = s.quiz.stop_time - s.quiz.start_time - timedelta(
+        seconds=2)  # correction for time delay  with js-contdown in template
+    result = s.quiz.result()
+    result[0] = result[0][:s.quiz.current_number_question]
+    context = {'result': result,
+               'questions_answers': [
+                   [r,
+                    a.name,
+                    a.code,
+                    [dict(a.list_answers)[i] for i in a.get_correct_answer()],
+                    a.user_answer,
+                    a.explanation]
+                   for r, a in zip(result[0], s.quiz.questions[:s.quiz.current_number_question])],
+               'quiz_time': s.quiz.time_delta.__str__().split('.')[0],
+               }
+    s.quiz.current_number_question = 0
+    del s.quiz
+    return render(request, 'quiz/quiz_finish.html', context)
+
 
 
 def useful_links(request):
