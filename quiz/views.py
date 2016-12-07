@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from .models import Quiz, S, CategoryQuestion, UsefulLinks, Question
 
 s = S()  # my session
-
+s.quiz = Quiz()
 
 def index(request):
     categories = CategoryQuestion.objects.all()
