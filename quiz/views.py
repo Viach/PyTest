@@ -26,8 +26,9 @@ def quiz_process(request):
     if request.session['quiz'].current_number_question >= 0:  # write user answer for previous  question
         request.session['quiz'].questions[request.session['quiz'].current_number_question].user_answer = set(
             int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
+    n_q =  request._get_post().get('next_question')
+    request.session['quiz'].current_number_question = int(n_q) if n_q else 0
 
-    request.session['quiz'].current_number_question += 1
     if request.session['quiz'].current_number_question > len(request.session['quiz'].questions) - 1:
         return redirect('quiz_finish')
     else:
