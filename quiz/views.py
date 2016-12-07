@@ -6,6 +6,7 @@ from .models import Quiz, S, CategoryQuestion, UsefulLinks, Question
 
 s = S()  # my session
 
+
 def index(request):
     categories = CategoryQuestion.objects.all()
     categories.length = len(categories)
@@ -20,8 +21,7 @@ def quiz(request, *args):
     print('\n     status:', status)
     if status == 'start':
         s.quiz = Quiz()
-        print('\n             s.quiz created. length:', s.quiz.questions.__len__()
-, '   dict:', s.__dict__.keys(), '\n')
+        print('\n             s.quiz created. length:', s.quiz.questions.__len__(), '   dict:', s.__dict__.keys(), '\n')
         context = {'number_questions': len(s.quiz.questions)}
         return render(request, 'quiz/quiz_start.html', context)
     elif status == 'next':
