@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.sessions.models import Session
 from  django.core.validators import validate_comma_separated_integer_list
 
 from datetime import datetime, timedelta
@@ -41,14 +40,6 @@ class Question(models.Model):
     def get_input_type(self):
         return 'radio' if len(self.get_correct_answer()) == 1 else 'checkbox'
 
-
-class S(Session):
-    def __init__(self):
-        self.quiz = None
-        self.mail = None
-
-    def __str__(self):
-        return 'My Session Object'
 
 
 class Quiz():
