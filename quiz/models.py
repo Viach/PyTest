@@ -46,11 +46,11 @@ class Quiz():
     def __init__(self):
         self.questions = []
         self.categories = CategoryQuestion.objects.all()
-        for category in self.categories:
+        for category in self.categories[:1]:
             lst = list(Question.objects.all().filter(enabled=True).filter(category=category.id))
             shuffle(lst)
             self.questions.extend(lst[-2:])
-        self.current_number_question = -1
+
         self.start_time = datetime.now()
         self.stop_time = datetime.now()
         self.time_delta = self.stop_time - self.start_time

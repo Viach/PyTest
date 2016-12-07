@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 from .models import Quiz, CategoryQuestion, UsefulLinks, Question
 
 
-
 def index(request):
     categories = CategoryQuestion.objects.all()
     categories.length = len(categories)
@@ -16,38 +15,40 @@ def index(request):
 
 
 def quiz_start(request):
-
     request.session['quiz'] = Quiz()
     context = {'number_questions': len(request.session['quiz'].questions)}
     return render(request, 'quiz/quiz_start.html', context)
 
 
 def quiz_process(request):
-    if request.session['quiz'].current_number_question >= 0:  # write user answer for previous  question
-        request.session['quiz'].questions[request.session['quiz'].current_number_question].user_answer = set(
-            int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
-    n_q =  request._get_post().get('next_question')
-    request.session['quiz'].current_number_question = int(n_q) if n_q else 0
+    current_number_question = int(request._get_post().get('next_question'))
 
-    if request.session['quiz'].current_number_question > len(request.session['quiz'].questions) - 1:
+    if current_number_question > len(request.session['quiz'].questions) - 1:
         return redirect('quiz_finish')
     else:
-        current_question = request.session['quiz'].questions[request.session['quiz'].current_number_question]
+        current_question = request.session['quiz'].questions[current_number_question]
         current_question.list_answers = current_question.get_answers()
         current_question.input_type = current_question.get_input_type()
         context = {'current_question': current_question,
-                   'current_question_number_in_quiz': request.session['quiz'].current_number_question + 1,
+                   'current_question_number_in_quiz': current_number_question + 1,
                    'number_questions': len(request.session['quiz'].questions),
                    }
         return render(request, 'quiz/quiz_process.html', context)
 
+def quiz_save_user_result(request):
+    current_number_question = int(request._get_post().get('next_question')) - 1
+    request.session['quiz'].questions[current_number_question].user_answer = set(
+            int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
+
 
 def quiz_finish(request):
+    current_number_question = request.session['quiz'].get_current_number_question()
     request.session['quiz'].stop_time = datetime.now()
-    request.session['quiz'].time_delta = request.session['quiz'].stop_time - request.session['quiz'].start_time - timedelta(
+    request.session['quiz'].time_delta = request.session['quiz'].stop_time - request.session[
+        'quiz'].start_time - timedelta(
         seconds=2)  # correction for time delay  with js-contdown in template
     result = request.session['quiz'].result()
-    result[0] = result[0][:request.session['quiz'].current_number_question]
+    result[0] = result[0][:current_number_question]
     context = {'result': result,
                'questions_answers': [
                    [r,
@@ -56,7 +57,7 @@ def quiz_finish(request):
                     [dict(a.list_answers)[i] for i in a.get_correct_answer()],
                     a.user_answer,
                     a.explanation]
-                   for r, a in zip(result[0], request.session['quiz'].questions[:request.session['quiz'].current_number_question])],
+                   for r, a in zip(result[0], request.session['quiz'].questions[:current_number_question])],
                'quiz_time': request.session['quiz'].time_delta.__str__().split('.')[0],
                }
     request.session['quiz'].current_number_question = 0
@@ -83,6 +84,7 @@ def contact(request):
         request.session['mail'].send(fail_silently=False)
         del request.session['mail']
         return redirect('index')
-    request.session['mail'] = {'subject': 'Вітаю... тут пишемо заголовок повідомлення', 'body': 'А тут текст листа...', }
+    request.session['mail'] = {'subject': 'Вітаю... тут пишемо заголовок повідомлення',
+                               'body': 'А тут текст листа...', }
     context = {'mail': request.session['mail'], }
     return render(request, 'quiz/contact.html', context)
