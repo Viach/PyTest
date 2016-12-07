@@ -23,7 +23,9 @@ def quiz_start(request):
 def quiz_process(request):
     current_number_question = int(request._get_post().get('next_question'))
 
-    if current_number_question > len(request.session['quiz'].questions) - 1:
+    if current_number_question > 0:
+        request.session['quiz'].questions[current_number_question].user_answer = set(int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
+    elif current_number_question > len(request.session['quiz'].questions) - 1:
         return redirect('quiz_finish')
     else:
         current_question = request.session['quiz'].questions[current_number_question]
@@ -34,11 +36,6 @@ def quiz_process(request):
                    'number_questions': len(request.session['quiz'].questions),
                    }
         return render(request, 'quiz/quiz_process.html', context)
-
-def quiz_save_user_result(request):
-    current_number_question = int(request._get_post().get('next_question')) - 1
-    request.session['quiz'].questions[current_number_question].user_answer = set(
-            int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
 
 
 def quiz_finish(request):
