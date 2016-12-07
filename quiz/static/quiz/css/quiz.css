@@ -67,6 +67,7 @@ background: linear-gradient(to right,
 
 #content {
 padding: 0 0.3em;
+min-height: 40em;
 }
 
 .code {

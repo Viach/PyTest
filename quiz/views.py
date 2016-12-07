@@ -43,7 +43,6 @@ def quiz_process(request):
 
 
 def quiz_finish(request):
-    #if 'quiz' not in request.session['quiz'].__dict__.keys():        return redirect('quiz_start')
     request.session['quiz'].stop_time = datetime.now()
     request.session['quiz'].time_delta = request.session['quiz'].stop_time - request.session['quiz'].start_time - timedelta(
         seconds=2)  # correction for time delay  with js-contdown in template
@@ -61,12 +60,12 @@ def quiz_finish(request):
                'quiz_time': request.session['quiz'].time_delta.__str__().split('.')[0],
                }
     request.session['quiz'].current_number_question = 0
-    del s
+    del request.session['quiz']
     return render(request, 'quiz/quiz_finish.html', context)
 
 
 def useful_links(request):
-    context = {'links': UsefulLinks.objectrequest.session['quiz'].all(), }
+    context = {'links': UsefulLinks.objects.all(), }
     return render(request, 'quiz/useful_links.html', context)
 
 
@@ -81,7 +80,7 @@ def contact(request):
             reply_to=['another@example.com'],
             # headers={'Message-ID': 'foo'},
         )
-        request.session['quiz'].mail.send(fail_silently=False)
+        request.session['mail'].send(fail_silently=False)
         del request.session['mail']
         return redirect('index')
     request.session['mail'] = {'subject': 'Вітаю... тут пишемо заголовок повідомлення', 'body': 'А тут текст листа...', }
