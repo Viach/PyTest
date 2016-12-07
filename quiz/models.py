@@ -45,6 +45,8 @@ class Question(models.Model):
 class S(Session):
     def __init__(self):
         # delete all children for G class
+        self.quiz = None
+        self.mail = None
         pass
 
     def __str__(self):
