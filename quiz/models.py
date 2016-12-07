@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.sessions.models import Session
 from  django.core.validators import validate_comma_separated_integer_list
 
+from datetime import datetime, timedelta
 from  random import shuffle
 
 
@@ -58,6 +59,11 @@ class Quiz():
             lst = list(Question.objects.all().filter(enabled=True).filter(category=category.id))
             shuffle(lst)
             self.questions.extend(lst[-2:])
+        self.current_number_question = -1
+        self.start_time = datetime.now()
+        self.stop_time = datetime.now()
+        self.time_delta = self.stop_time - self.start_time
+
 
     def __str__(self):
         return 'Set of Questions'

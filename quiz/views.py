@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 from .models import Quiz, S, CategoryQuestion, UsefulLinks, Question
 
 s = S()  # my session
-s.quiz = Quiz()
 
 def index(request):
     categories = CategoryQuestion.objects.all()
@@ -20,13 +19,12 @@ def quiz(request, *args):
     status = args[0]
     if status == 'start':
         s.quiz = Quiz()
-        s.quiz.current_number_question = -1
-        s.quiz.start_time = datetime.now()
-        print('s created', s.__dict__.keys())
+        print('\n             s.quiz created. length:', s.quiz.questions.__len__()
+, '   dict:', s.__dict__.keys(), '\n')
         context = {'number_questions': len(s.quiz.questions)}
         return render(request, 'quiz/quiz_start.html', context)
     elif status == 'next':
-        print('s.quiz.current_number_question: ',s.quiz.current_number_question, s.__dict__.keys())
+        print('s.quiz.current_number_question: ', s.quiz.current_number_question, s.__dict__.keys())
         if 'quiz' not in s.__dict__.keys():
             return redirect('quiz', 'start')
         if s.quiz.current_number_question >= 0:
