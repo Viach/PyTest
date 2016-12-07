@@ -44,10 +44,8 @@ class Question(models.Model):
 
 class S(Session):
     def __init__(self):
-        # delete all children for G class
         self.quiz = None
         self.mail = None
-        pass
 
     def __str__(self):
         return 'My Session Object'
@@ -66,13 +64,12 @@ class Quiz():
         self.stop_time = datetime.now()
         self.time_delta = self.stop_time - self.start_time
 
-
     def __str__(self):
         return 'Set of Questions'
 
     def result(self):
         list_result = [v.get_correct_answer() == v.user_answer for v in self.questions]
-        c_a = list_result.count(True)   # correct answers
+        c_a = list_result.count(True)  # correct answers
         w_a = list_result.count(False)  # wrong answers
         n_a = c_a + w_a
         k = round(c_a / n_a * 100)
