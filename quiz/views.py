@@ -22,10 +22,11 @@ def quiz(request, *args):
         s.quiz = Quiz()
         s.quiz.current_number_question = -1
         s.quiz.start_time = datetime.now()
+        print('s created', s.__dict__.keys())
         context = {'number_questions': len(s.quiz.questions)}
         return render(request, 'quiz/quiz_start.html', context)
     elif status == 'next':
-        print(s.__dict__.keys())
+        print('s.quiz.current_number_question: ',s.quiz.current_number_question, s.__dict__.keys())
         if 'quiz' not in s.__dict__.keys():
             return redirect('quiz', 'start')
         if s.quiz.current_number_question >= 0:
