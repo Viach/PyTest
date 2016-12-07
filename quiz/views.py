@@ -17,6 +17,7 @@ def index(request):
 
 def quiz(request, *args):
     status = args[0]
+    print('\n     status:', status)
     if status == 'start':
         s.quiz = Quiz()
         print('\n             s.quiz created. length:', s.quiz.questions.__len__()
