@@ -6,7 +6,6 @@ from .models import Quiz, S, CategoryQuestion, UsefulLinks, Question
 
 s = S()  # my session
 
-
 def index(request):
     categories = CategoryQuestion.objects.all()
     categories.length = len(categories)
