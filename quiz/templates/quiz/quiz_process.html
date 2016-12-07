@@ -4,12 +4,11 @@
 {% block content %}
 <div class="uk-grid">
     <div class="uk-width-8-10">
-        {{request.session.quiz.current_number_question}}
         <form action="{% url 'quiz_process' %}" method="post">
             {% csrf_token %}
-            <input id="current_question_number_in_quiz" name="next_question" value="{{current_question_number_in_quiz}}"
-                                                size="3" readonly >
-            <div class="title"> Питання  <span id="current_question_number_in_quiz" >{{current_question_number_in_quiz}}</span> із <span
+            <input type="hidden" name="next_question" value="{{current_question_number_in_quiz}}" readonly>
+            <div class="title"> Питання <span
+                    id="current_question_number_in_quiz">{{current_question_number_in_quiz}}</span> із <span
                     id="number_questions">{{number_questions}}</span> питань
             </div>
             <div class="uk-text-large">{{current_question.name}}</div>
@@ -30,7 +29,7 @@
 
     </div>
     <div class='countdown uk-width-2-10 uk-flex uk-flex-middle uk-flex-column uk-flex-space-between'>
-        <div id="clockdiv" >
+        <div id="clockdiv">
             <div>
                 <span class="hours"></span>
             </div>
@@ -41,7 +40,7 @@
                 <span id="seconds" class="seconds"></span>
             </div>
         </div>
-        <form  action="{% url 'quiz_finish' %}" method="post">
+        <form action="{% url 'quiz_finish' %}" method="post">
             {% csrf_token %}
             <input class="uk-button-large" type="submit" value="Перервати тест">
         </form>
