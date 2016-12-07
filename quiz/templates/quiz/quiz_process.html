@@ -4,11 +4,14 @@
 {% block content %}
 <div class="uk-grid">
     <div class="uk-width-8-10">
+        {{request.session.quiz.current_number_question}}
         <form action="{% url 'quiz_process' %}" method="post">
-            <div class="title"> Питання  <span id="current_question_number_in_quiz">{{current_question_number_in_quiz}}</span> із <span
+            {% csrf_token %}
+            <input id="current_question_number_in_quiz" name="next_question" value="{{current_question_number_in_quiz}}"
+                                                size="3" readonly disabled >
+            <div class="title"> Питання  <span id="current_question_number_in_quiz" >{{current_question_number_in_quiz}}</span> із <span
                     id="number_questions">{{number_questions}}</span> питань
             </div>
-            {% csrf_token %}
             <div class="uk-text-large">{{current_question.name}}</div>
             {% if current_question.code %}
             <div>
