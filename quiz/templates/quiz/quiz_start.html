@@ -19,7 +19,6 @@
 <br><br>
 <form action="{% url 'quiz_process' %}" method="post">
     {% csrf_token %}
-    <input type="hidden" name="next_question" value="0" readonly>
     <input class="uk-button-large" type="submit" value="Перейти до тестування">
 </form>
 

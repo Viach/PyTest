@@ -6,7 +6,6 @@
     <div class="uk-width-8-10">
         <form action="{% url 'quiz_process' %}" method="post">
             {% csrf_token %}
-            <input type="hidden" name="next_question" value="{{current_question_number_in_quiz}}" readonly>
             <div class="title"> Питання <span
                     id="current_question_number_in_quiz">{{current_question_number_in_quiz}}</span> із <span
                     id="number_questions">{{number_questions}}</span> питань

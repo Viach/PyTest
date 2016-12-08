@@ -16,19 +16,22 @@ def index(request):
 
 def quiz_start(request):
     request.session['quiz'] = Quiz()
+    request.session['next_question'] = 0
     context = {'number_questions': len(request.session['quiz'].questions)}
     return render(request, 'quiz/quiz_start.html', context)
 
 
 def quiz_process(request):
-    current_number_question = int(request._get_post().get('next_question'))
+    current_number_question = request.session['next_question']
 
     if current_number_question > 0:
-        request.session['quiz'].questions[current_number_question-1].user_answer = set(int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
+        request.session[current_number_question - 1] = set(
+            int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
 
     if current_number_question > len(request.session['quiz'].questions) - 1:
         return redirect('quiz_finish')
     else:
+        request.session['next_question'] += 1
         current_question = request.session['quiz'].questions[current_number_question]
         current_question.list_answers = current_question.get_answers()
         current_question.input_type = current_question.get_input_type()
@@ -40,13 +43,22 @@ def quiz_process(request):
 
 
 def quiz_finish(request):
-    current_number_question = request.session['quiz'].get_current_number_question()
+    total_number_question = request.session['next_question']
     request.session['quiz'].stop_time = datetime.now()
     request.session['quiz'].time_delta = request.session['quiz'].stop_time - request.session[
         'quiz'].start_time - timedelta(
         seconds=2)  # correction for time delay  with js-contdown in template
-    result = request.session['quiz'].result()
-    result[0] = result[0][:current_number_question]
+
+    list_result = [request.session['quiz'].questions[k].get_correct_answer() == request.session[k] for k in
+                   range(total_number_question)]
+    c_a = list_result.count(True)  # correct answers
+    w_a = list_result.count(False)  # wrong answers
+    n_a = c_a + w_a
+    k = round(c_a / n_a * 100)
+    data_result = [c_a, w_a, n_a, k, k >= 80]
+    result = [list_result, data_result]
+
+    result[0] = result[0][:total_number_question]
     context = {'result': result,
                'questions_answers': [
                    [r,
@@ -55,10 +67,11 @@ def quiz_finish(request):
                     [dict(a.list_answers)[i] for i in a.get_correct_answer()],
                     a.user_answer,
                     a.explanation]
-                   for r, a in zip(result[0], request.session['quiz'].questions[:current_number_question])],
+                   for r, a in zip(result[0], request.session['quiz'].questions[:total_number_question])],
                'quiz_time': request.session['quiz'].time_delta.__str__().split('.')[0],
                }
-    request.session['quiz'].current_number_question = 0
+
+    del request.session['next_question']
     del request.session['quiz']
     return render(request, 'quiz/quiz_finish.html', context)
 
