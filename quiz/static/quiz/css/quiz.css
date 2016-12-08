@@ -97,6 +97,10 @@ color: #d85030;
 color: #659f13;
 }
 
+.text_deleted {
+text-decoration: line-through;
+}
+
 .site_logo {
 float: left;
 margin-top: 0.5em;

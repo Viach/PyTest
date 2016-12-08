@@ -21,12 +21,12 @@
     </p>
 </div>
 
-{% for r, name, code, correct_answer, user_answer, explanation in questions_answers %}
+{% for r, name, code, answers, correct_answer, user_answer, explanation in questions_answers %}
 <div class="{% if forloop.counter|divisibleby:2 %} result_line_even {% else %} result_line_odd {% endif %} ">
     <h4>
         Запитання: {{ name }}<br>
         <span class="{%if not r%} result_answer_false  {%else%} result_answer_true {%endif%}">
-            {%if r%} Відповідь: вірна {%else%} Відповідь: невірна{%endif%}
+            Ваша відповідь:{%if r%}  вірна {%else%}  невірна{%endif%}
         </span>
     </h4>
     {% if code %}
@@ -36,8 +36,12 @@
     {% endif %}
     {% if not r %}
     <div>Правильна відповідь:
-        {% for i in correct_answer %}
-        <div class="uk-text-bold">{{i}}</div>
+        {% for i in answers %}
+        <div class="uk-text-bold">
+            <span class="{%if i.1 not in correct_answer%} result_answer_false text_deleted {%else%} result_answer_true {%endif%}">
+                {{i.1}}
+            </span>
+        </div>
         {% endfor %}
     </div>
     <div>Пояснення: {{ explanation }}</div>

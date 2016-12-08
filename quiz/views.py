@@ -57,20 +57,19 @@ def quiz_finish(request):
     k = round(c_a / n_a * 100)
     data_result = [c_a, w_a, n_a, k, k >= 80]
     result = [list_result, data_result]
-
     result[0] = result[0][:total_number_question]
     context = {'result': result,
                'questions_answers': [
                    [r,
                     a.name,
                     a.code,
+                    a.get_answers(),
                     [dict(a.list_answers)[i] for i in a.get_correct_answer()],
                     a.user_answer,
                     a.explanation]
                    for r, a in zip(result[0], request.session['quiz'].questions[:total_number_question])],
                'quiz_time': request.session['quiz'].time_delta.__str__().split('.')[0],
                }
-
     del request.session['next_question']
     del request.session['quiz']
     return render(request, 'quiz/quiz_finish.html', context)
