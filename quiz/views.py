@@ -23,12 +23,11 @@ def quiz_start(request):
 
 def quiz_process(request):
     current_number_question = request.session['next_question']
-
     if current_number_question > 0:
         request.session[current_number_question - 1] = set(
             int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
 
-    if current_number_question > len(request.session['quiz'].questions) - 1:
+    if current_number_question > len(request.session['quiz'].questions) - 1 or dict(request._get_post()).get('exit_quiz', False):
         return redirect('quiz_finish')
     else:
         request.session['next_question'] += 1
@@ -43,7 +42,7 @@ def quiz_process(request):
 
 
 def quiz_finish(request):
-    total_number_question = request.session['next_question']
+    total_number_question = request.session['next_question'] - 1    # question index base - 0 !
     request.session['quiz'].stop_time = datetime.now()
     request.session['quiz'].time_delta = request.session['quiz'].stop_time - request.session[
         'quiz'].start_time - timedelta(

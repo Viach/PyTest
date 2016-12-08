@@ -39,9 +39,10 @@
                 <span id="seconds" class="seconds"></span>
             </div>
         </div>
-        <form action="{% url 'quiz_finish' %}" method="post">
+        <form action="{% url 'quiz_process' %}"  method="post">
             {% csrf_token %}
-            <input class="uk-button-large" type="submit" value="Перервати тест">
+            <input type="hidden" name="exit_quiz" value="True" readonly>
+            <input class="uk-button-large" type="submit"  value="Перервати тест">
         </form>
     </div>
 
