@@ -18,7 +18,7 @@ def quiz_start(request):
     request.session['quiz'] = Quiz()
     request.session['next_question'] = 0
     request.session['total_number_questions_in_quiz'] = len(request.session['quiz'].questions)
-    for i in range(request.session['total_number_questions_in_quiz']): # question index base - 0 !
+    for i in range(request.session['total_number_questions_in_quiz']):  # question index base - 0 !
         request.session[i] = {0, }
 
     context = {'number_questions': len(request.session['quiz'].questions)}
@@ -67,10 +67,12 @@ def quiz_finish(request):
                     a.name,
                     a.code,
                     a.get_answers(),
-                    [dict(a.list_answers)[i] for i in a.get_correct_answer()],
+                    [x[1] for x in a.get_answers() if x[0] in a.get_correct_answer()],
+                    #                    [dict(a.list_answers)[i] for i in a.get_correct_answer()],
                     a.user_answer,
                     a.explanation]
-                   for r, a in zip(result[0], request.session['quiz'].questions)],
+                   for r, a in
+                   zip(result[0], request.session['quiz'].questions[:request.session['next_question'] - 1])],
                'quiz_time': request.session['quiz'].time_delta.__str__().split('.')[0],
                }
     del request.session['next_question']

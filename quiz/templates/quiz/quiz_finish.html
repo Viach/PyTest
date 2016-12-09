@@ -38,7 +38,7 @@
     <div>Правильна відповідь:
         {% for i in answers %}
         <div class="uk-text-bold">
-            <span class="{%if i.1 not in correct_answer%} result_answer_false text_deleted {%else%} result_answer_true {%endif%}">
+            <span class="{%if i.1 not in correct_answer%}  text_deleted {%else%} result_answer_true {%endif%}">
                 {{i.1}}
             </span>
         </div>
