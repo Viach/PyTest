@@ -17,6 +17,10 @@ def index(request):
 def quiz_start(request):
     request.session['quiz'] = Quiz()
     request.session['next_question'] = 0
+    request.session['total_number_questions_in_quiz'] = len(request.session['quiz'].questions)
+    for i in range(request.session['total_number_questions_in_quiz']): # question index base - 0 !
+        request.session[i] = {0, }
+
     context = {'number_questions': len(request.session['quiz'].questions)}
     return render(request, 'quiz/quiz_start.html', context)
 
@@ -27,7 +31,8 @@ def quiz_process(request):
         request.session[current_number_question - 1] = set(
             int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
 
-    if current_number_question > len(request.session['quiz'].questions) - 1 or dict(request._get_post()).get('exit_quiz', False):
+    if current_number_question > len(request.session['quiz'].questions) - 1 or dict(request._get_post()).get(
+            'exit_quiz', False):
         return redirect('quiz_finish')
     else:
         request.session['next_question'] += 1
@@ -42,21 +47,20 @@ def quiz_process(request):
 
 
 def quiz_finish(request):
-    total_number_question = request.session['next_question'] - 1    # question index base - 0 !
     request.session['quiz'].stop_time = datetime.now()
     request.session['quiz'].time_delta = request.session['quiz'].stop_time - request.session[
         'quiz'].start_time - timedelta(
         seconds=2)  # correction for time delay  with js-contdown in template
 
     list_result = [request.session['quiz'].questions[k].get_correct_answer() == request.session[k] for k in
-                   range(total_number_question)]
+                   range(request.session['total_number_questions_in_quiz'])]
     c_a = list_result.count(True)  # correct answers
     w_a = list_result.count(False)  # wrong answers
     n_a = c_a + w_a
     k = round(c_a / n_a * 100)
     data_result = [c_a, w_a, n_a, k, k >= 80]
     result = [list_result, data_result]
-    result[0] = result[0][:total_number_question]
+
     context = {'result': result,
                'questions_answers': [
                    [r,
@@ -66,7 +70,7 @@ def quiz_finish(request):
                     [dict(a.list_answers)[i] for i in a.get_correct_answer()],
                     a.user_answer,
                     a.explanation]
-                   for r, a in zip(result[0], request.session['quiz'].questions[:total_number_question])],
+                   for r, a in zip(result[0], request.session['quiz'].questions)],
                'quiz_time': request.session['quiz'].time_delta.__str__().split('.')[0],
                }
     del request.session['next_question']
