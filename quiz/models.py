@@ -46,7 +46,7 @@ class Quiz():
     def __init__(self):
         self.questions = []
         self.categories = CategoryQuestion.objects.all()
-        for category in self.categories:
+        for category in self.categories[:1]:
             lst = list(Question.objects.all().filter(enabled=True).filter(category=category.id))
             shuffle(lst)
             self.questions.extend(lst[-2:])

@@ -26,13 +26,17 @@ def quiz_start(request):
 
 
 def quiz_process(request):
-    current_number_question = request.session['next_question']
+    current_number_question = request.session.get('next_question', None)
+    if current_number_question == None:
+        return redirect('quiz_start')
+
     if current_number_question > 0:
         request.session[current_number_question - 1] = set(
             int(i) for i in dict(request._get_post()).get('user_answer', [0, ]))
-
-    if current_number_question > len(request.session['quiz'].questions) - 1 or dict(request._get_post()).get(
-            'exit_quiz', False):
+    quiz_canceled = dict(request._get_post()).get('quiz_cancel', False)
+    if current_number_question > len(request.session['quiz'].questions) - 1 or quiz_canceled:
+        if quiz_canceled: request.session['next_question'] -= 1
+        request.session['quiz_finished'] = True
         return redirect('quiz_finish')
     else:
         request.session['next_question'] += 1
@@ -47,6 +51,9 @@ def quiz_process(request):
 
 
 def quiz_finish(request):
+    if not request.session.get('quiz_finished', False):
+        return redirect('quiz_start')
+
     request.session['quiz'].stop_time = datetime.now()
     request.session['quiz'].time_delta = request.session['quiz'].stop_time - request.session[
         'quiz'].start_time - timedelta(
@@ -72,11 +79,12 @@ def quiz_finish(request):
                     a.user_answer,
                     a.explanation]
                    for r, a in
-                   zip(result[0], request.session['quiz'].questions[:request.session['next_question'] - 1])],
+                   zip(result[0], request.session['quiz'].questions[:request.session['next_question']])],
                'quiz_time': request.session['quiz'].time_delta.__str__().split('.')[0],
                }
     del request.session['next_question']
     del request.session['quiz']
+    del request.session['quiz_finished']
     return render(request, 'quiz/quiz_finish.html', context)
 
 
