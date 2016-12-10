@@ -39,6 +39,11 @@
                 <span id="seconds" class="seconds"></span>
             </div>
         </div>
+        <div id="python3_warning" class="uk-text-muted uk-test-large uk-text-warning uk-text-bold uk-text-center">
+            УВАГА!<br>
+            Тест по<br>
+            Python 3
+        </div>
         <form action="{% url 'quiz_process' %}"  method="post">
             {% csrf_token %}
             <input type="hidden" name="quiz_cancel" value="True" readonly>

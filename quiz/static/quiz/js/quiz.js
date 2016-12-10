@@ -36,6 +36,9 @@ function initializeClock(id, endtime) {
     if (t.total ==  60 * 1000){
       document.getElementById("seconds").style.color = 'red';
     }
+    if (document.getElementById("current_question_number_in_quiz").innerHTML != '1'){
+    document.getElementById("python3_warning").style.display = 'none';
+     }
   }
 
   updateClock();
