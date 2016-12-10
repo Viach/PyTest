@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="uk-grid">
-    <div class="uk-width-8-10">
+    <div class="uk-width-8-10 no-select">
         <form action="{% url 'quiz_process' %}" method="post">
             {% csrf_token %}
             <div class="title"> Питання <span
@@ -13,7 +13,7 @@
             <div class="uk-text-large">{{current_question.name}}</div>
             {% if current_question.code %}
             <div>
-                <pre class="code">{{current_question.code}}</pre>
+                <pre class="code no-select">{{current_question.code}}</pre>
             </div>
             {% endif %}
             <ul class="uk-list uk-list-striped ">
