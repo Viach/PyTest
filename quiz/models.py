@@ -1,5 +1,7 @@
 from django.db import models
 from  django.core.validators import validate_comma_separated_integer_list
+from django.conf import settings
+
 
 from datetime import datetime, timedelta
 from  random import shuffle
@@ -54,7 +56,7 @@ class Quiz():
         if self.blitz:
             self.lst = list(Question.objects.all().filter(enabled=True))
             self.lst = sorted(self.lst, key=lambda x: x.get_k_difficulty(), reverse=True)
-            self.questions.extend(self.lst[:10])
+            self.questions.extend(self.lst[:settings.NUMBER_QUESTIONS_IN_BLITZ])
 
         else:
             self.categories = CategoryQuestion.objects.all()

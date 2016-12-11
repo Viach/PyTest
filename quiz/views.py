@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
+from django.conf import settings
 from datetime import datetime, timedelta
 
 from .models import Quiz, CategoryQuestion, UsefulLinks, Question
@@ -21,7 +22,9 @@ def quiz_start(request):
     for i in range(request.session['total_number_questions_in_quiz']):  # question index base - 0 !
         request.session[i] = {0, }
 
-    context = {'number_questions': len(request.session['quiz'].questions)}
+    context = {'number_questions': len(request.session['quiz'].questions),
+               'number_questions_in_blitz': settings.NUMBER_QUESTIONS_IN_BLITZ,
+               }
     return render(request, 'quiz/quiz_start.html', context)
 
 
