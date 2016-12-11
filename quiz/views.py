@@ -58,9 +58,14 @@ def quiz_finish(request):
     request.session['quiz'].time_delta = request.session['quiz'].stop_time - request.session[
         'quiz'].start_time - timedelta(
         seconds=2)  # correction for time delay  with js-contdown in template
+    list_result = []
+    for k in range(request.session['total_number_questions_in_quiz']):
+        r = request.session['quiz'].questions[k].get_correct_answer() == request.session[k]
+        list_result.append(r)
+        request.session['quiz'].questions[k].answered += 1
+        if not r: request.session['quiz'].questions[k].wrong_answered += 1
+        request.session['quiz'].questions[k].save()
 
-    list_result = [request.session['quiz'].questions[k].get_correct_answer() == request.session[k] for k in
-                   range(request.session['total_number_questions_in_quiz'])]
     c_a = list_result.count(True)  # correct answers
     w_a = list_result.count(False)  # wrong answers
     n_a = c_a + w_a

@@ -22,6 +22,8 @@ class Question(models.Model):
     correct_answer = models.CharField(max_length=10, validators=[validate_comma_separated_integer_list])
     explanation = models.TextField(blank=True, default='Спробуйте і переконайтеся.')
     enabled = models.BooleanField(default=False)
+    answered = models.IntegerField( default=0)
+    wrong_answered = models.IntegerField( default=0)
 
     user_answer = {None}
 
