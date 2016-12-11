@@ -15,7 +15,7 @@ def index(request):
 
 
 def quiz_start(request):
-    request.session['quiz'] = Quiz()
+    request.session['quiz'] = Quiz(blitz=True)
     request.session['next_question'] = 0
     request.session['total_number_questions_in_quiz'] = len(request.session['quiz'].questions)
     for i in range(request.session['total_number_questions_in_quiz']):  # question index base - 0 !
