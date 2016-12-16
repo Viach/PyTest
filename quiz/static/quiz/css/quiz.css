@@ -27,6 +27,7 @@ header {
 }
 
 footer{
+margin-top: 1em;
 background-color: #999999;
 background: linear-gradient(to right,
                             White,

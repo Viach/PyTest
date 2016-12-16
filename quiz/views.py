@@ -11,21 +11,22 @@ def index(request):
     categories.length = len(categories)
     for k, v in enumerate(categories):
         categories[k].number_questions = len(Question.objects.all().filter(enabled=True).filter(category=v.id))
-    context = {'categories': categories, }
+    context = {'categories': categories,
+               'number_questions': categories.length * settings.NUMBER_QUESTIONS_PER_CATEGORY,
+               'number_questions_in_blitz': settings.NUMBER_QUESTIONS_IN_BLITZ,
+               }
     return render(request, 'quiz/index.html', context)
 
 
 def quiz_start(request):
-    request.session['quiz'] = Quiz(blitz=True)
+    blitz = True if request._get_post().get('blitz')=='True' else False
+    request.session['quiz'] = Quiz(blitz=blitz)
     request.session['next_question'] = 0
     request.session['total_number_questions_in_quiz'] = len(request.session['quiz'].questions)
     for i in range(request.session['total_number_questions_in_quiz']):  # question index base - 0 !
         request.session[i] = {0, }
 
-    context = {'number_questions': len(request.session['quiz'].questions),
-               'number_questions_in_blitz': settings.NUMBER_QUESTIONS_IN_BLITZ,
-               }
-    return render(request, 'quiz/quiz_start.html', context)
+    return redirect('quiz_process')
 
 
 def quiz_process(request):

@@ -63,7 +63,7 @@ class Quiz():
             for self.category in self.categories:
                 self.lst = list(Question.objects.all().filter(enabled=True).filter(category=self.category.id))
                 shuffle(self.lst)
-                self.questions.extend(self.lst[-2:])
+                self.questions.extend(self.lst[-settings.NUMBER_QUESTIONS_PER_CATEGORY:])
 
         self.start_time = datetime.now()
         self.stop_time = datetime.now()
