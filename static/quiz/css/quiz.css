@@ -1,0 +1,171 @@
+body {
+background-color: Whitesmoke;
+background: linear-gradient(to right,
+                            LightGrey,
+                            White,
+                            White,
+                            White,
+                            White,
+                            White,
+                            White,
+                            LightGrey);
+}
+
+header {
+    background: #eee;
+    background: linear-gradient(to right,
+                            White,
+                            Whitesmoke,
+                            gainsboro,
+                            LightGrey,
+                            LightGrey,
+                            gainsboro,
+                            Whitesmoke,
+                            White);
+
+    color: #444;
+}
+
+footer{
+margin-top: 1em;
+background-color: #999999;
+background: linear-gradient(to right,
+                            White,
+                            Whitesmoke,
+                            gainsboro,
+                            LightGrey,
+                            LightGrey,
+                            gainsboro,
+                            Whitesmoke,
+                            White);
+}
+
+#container {
+background-color: #fbfbfb;
+}
+
+.uk-navbar {
+background: linear-gradient(to right,
+                            White,
+                            Whitesmoke,
+                            gainsboro,
+                            LightGrey,
+                            LightGrey,
+                            gainsboro,
+                            Whitesmoke,
+                            White);
+}
+
+.uk-navbar-nav>li>a {
+    color: #777;
+    font-size: 16px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    border: #eee;
+    border-style: outset;
+    border-width: thin;
+}
+
+#content {
+padding: 0 0.3em;
+min-height: 40em;
+}
+
+.code {
+font-size: 1em;
+padding: 1em;
+margin: 1em 2em;
+background-color : dimgrey;
+color: #ffa;
+}
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.result_line_even {
+padding: 1em 0.7em;
+background-color : #f5f5f5;
+}
+
+.result_line_odd {
+padding: 1em 0.7em;
+background-color : #eee;
+}
+
+.result_answer_false {
+color: #d85030;
+}
+
+.result_answer_true {
+color: #659f13;
+}
+
+.text_deleted {
+text-decoration: line-through;
+}
+
+.site_logo {
+float: left;
+margin-top: 0.5em;
+height:4em;
+}
+
+.title {
+text-align: center!important;
+color: #999!important;
+￼    font-weight: 700;
+font-size: 18px;
+￼    line-height: 24px;
+padding: 1em;
+}
+
+.footer-text {
+text-align: center!important;
+color: #666!important;
+￼    font-weight: 700;
+font-size: 16px;
+￼    line-height: 20px;
+padding: 0.5em;
+}
+
+/*************************************************** Countdown timer *************************************************/
+.countdown{
+
+  font-family: sans-serif;
+  font-weight: 100;
+}
+
+
+#clockdiv{
+    padding:10px 0;
+	font-family: sans-serif;
+	color: #fff;
+	display: inline-block;
+	font-weight: 100;
+	text-align: center;
+	font-size: 20px;
+}
+
+#clockdiv > div{
+	padding: 10px 5px;
+	border-radius: 3px;
+	background: #ddd;
+	display: inline-block;
+}
+
+#clockdiv div > span{
+	padding: 5px;
+	border-radius: 3px;
+	background: #ccc;
+	display: inline-block;
+}
+
+
+/* end Countdown timer */
