@@ -123,5 +123,9 @@ def contact(request):
 
 
 def error_500(request):
-    context = {'error': 'ERROR'}
+    context = {'error': 'ERROR: 500'}
+    return render(request, 'quiz/error.html', context)
+
+def error_404(request):
+    context = {'error': 'ERROR: 404'}
     return render(request, 'quiz/error.html', context)

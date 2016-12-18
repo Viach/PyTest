@@ -21,7 +21,7 @@ from django.contrib import admin
 
 handler500 = 'quiz.views.error_500'
 #handler400 = 'mysite.views.my_custom_bad_request_view'
-#handler404 = 'mysite.views.my_custom_bad_request_view'
+handler404 = 'quiz.views.error_404'
 
 urlpatterns = [
     url(r'^', include('quiz.urls')),
