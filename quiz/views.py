@@ -9,18 +9,22 @@ from .models import Quiz, CategoryQuestion, UsefulLinks, Question
 def index(request):
     categories = CategoryQuestion.objects.all()
     categories.length = len(categories)
+    number_questions = categories.length * settings.NUMBER_QUESTIONS_PER_CATEGORY
     for k, v in enumerate(categories):
         categories[k].number_questions = len(Question.objects.all().filter(enabled=True).filter(category=v.id))
     context = {'categories': categories,
-               'number_questions': categories.length * settings.NUMBER_QUESTIONS_PER_CATEGORY,
+               'number_questions': number_questions,
+               'time_quiz': (settings.TIME_PER_QUESTION * number_questions) // 60,
                'number_questions_in_blitz': settings.NUMBER_QUESTIONS_IN_BLITZ,
+               'time_quiz_blitz': (settings.TIME_PER_QUESTION_BLITZ * settings.NUMBER_QUESTIONS_IN_BLITZ) // 60,
                }
     return render(request, 'quiz/index.html', context)
 
 
 def quiz_start(request):
-    blitz = True if request._get_post().get('blitz')=='True' else False
+    blitz = True if request._get_post().get('blitz') == 'True' else False
     request.session['quiz'] = Quiz(blitz=blitz)
+    request.session['time_per_question'] = settings.TIME_PER_QUESTION_BLITZ if blitz else settings.TIME_PER_QUESTION
     request.session['next_question'] = 0
     request.session['total_number_questions_in_quiz'] = len(request.session['quiz'].questions)
     for i in range(request.session['total_number_questions_in_quiz']):  # question index base - 0 !
@@ -125,6 +129,7 @@ def contact(request):
 def error_500(request):
     context = {'error': 'ERROR: 500'}
     return render(request, 'quiz/error.html', context)
+
 
 def error_404(request):
     context = {'error': 'ERROR: 404'}
