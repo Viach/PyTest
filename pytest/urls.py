@@ -16,6 +16,12 @@ Including another URLconf
 
 from django.conf.urls import include, url
 from django.contrib import admin
+#from django.conf.urls import handler404, handler500
+
+
+handler500 = 'quiz.views.error_500'
+#handler400 = 'mysite.views.my_custom_bad_request_view'
+#handler404 = 'mysite.views.my_custom_bad_request_view'
 
 urlpatterns = [
     url(r'^', include('quiz.urls')),

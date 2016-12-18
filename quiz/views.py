@@ -120,3 +120,8 @@ def contact(request):
                                'body': 'А тут текст листа...', }
     context = {'mail': request.session['mail'], }
     return render(request, 'quiz/contact.html', context)
+
+
+def error_500(request):
+    context = {'error': 'ERROR'}
+    return render(request, 'quiz/error.html', context)
