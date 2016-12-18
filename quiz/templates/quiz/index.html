@@ -8,7 +8,7 @@
         Даний тест розрахований на бажаючих перевірити свої знання основ мови програмування <span class="uk-text-bold"> Python 3</span>.<br>
         Завдання відносяться до {{categories.length}}-ти наступних категорій:
     </div>
-    <ul class="uk-list  uk-list-striped uk-column-1-2 uk-text-left">
+    <ul class="uk-list  uk-list-striped uk-column-1-3 uk-text-left uk-text-small">
         {% for c in categories %}
         <li>{{c.name }} ({{c.number_questions}})</li>
         {% endfor %}
@@ -16,7 +16,7 @@
     <div class="uk-text-left">
         <div class="title">
             Питання приведені до Python3. Різницю між версіями можна прочитати на
-            <a href="https://wiki.python.org/moin/Python2orPython3">wiki.python.org</a>.
+            <a href="https://wiki.python.org/moin/Python2orPython3" target="_blank">wiki.python.org</a>.
         </div>
         Тест вважається зданим, якщо вірні відповіді дано не менше, ніж на 80% питань за відведений час.
         <div class="uk-grid">
