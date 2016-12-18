@@ -47,7 +47,7 @@ function initializeClock(id, endtime) {
 
 if (top.location.pathname == "/quiz_process" && document.getElementById("current_question_number_in_quiz").innerHTML == '1'){
 var number_questions = document.getElementById("number_questions");
-var deadline = new Date(Date.parse(new Date()) + number_questions.innerHTML *  60 * 1000);
+var deadline = new Date(Date.parse(new Date()) + number_questions.innerHTML * document.getElementById("time_per_question").value * 1000);
 localStorage.setItem("deadline", deadline);
 initializeClock('clockdiv', deadline);
 }
