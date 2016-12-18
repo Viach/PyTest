@@ -46,7 +46,7 @@
         </div>
         <form action="{% url 'quiz_process' %}"  method="post">
             {% csrf_token %}
-            <input id="time_per_question" type="hidden"  value="{{request.session.time_per_question}}" readonly>
+            <input id="time_per_question" type="hidden"  value="{{request.session.time_per_question}}"   readonly>
             <input type="hidden" name="quiz_cancel" value="True" readonly>
             <input class="uk-button-large" type="submit"  value="Перервати тест">
         </form>
