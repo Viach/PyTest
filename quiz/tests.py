@@ -16,6 +16,6 @@ class SimpleTest(TestCase):
 class HttpTest(TestCase):
     def test_home(self):
         c = Client()
-        response = c.get(reverse('home'))
+        response = c.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
-self.assertContains(response, 'Hello!')
+        self.assertContains(response, 'Python')
