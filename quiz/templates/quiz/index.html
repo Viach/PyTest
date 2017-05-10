@@ -4,20 +4,49 @@
 {% block content %}
 <div class="">
     <p class="title ">Тест на знання основ Python</p>
-    <div class="uk-text-left">
-        Даний тест розрахований на бажаючих перевірити свої знання основ мови програмування Python 3.<br>
+    <div class="uk-text-center">
+        Даний тест розрахований на бажаючих перевірити свої знання основ мови програмування <span class="uk-text-bold"> Python 3</span>.<br>
         Завдання відносяться до {{categories.length}}-ти наступних категорій:
     </div>
-    <ul class="uk-list  uk-list-striped uk-column-1-2 uk-text-left">
+    <ul class="uk-list  uk-list-striped uk-column-1-3 uk-text-left uk-text-small">
         {% for c in categories %}
         <li>{{c.name }} ({{c.number_questions}})</li>
         {% endfor %}
     </ul>
     <div class="uk-text-left">
+        <div class="title">
+            Питання приведені до Python3. Різницю між версіями можна прочитати на
+            <a href="https://wiki.python.org/moin/Python2orPython3" target="_blank">wiki.python.org</a>.
+        </div>
+        <div class="uk-text-center"> Тест вважається зданим, якщо вірні відповіді дано не менше, ніж на 80% питань за відведений час.</div>
+        <div class="uk-grid">
+            <div class="title uk-width-1-1 uk-flex uk-flex-middle uk-flex-column ">Натисніть обраний варіант тесту для старту:</div>
+            <div class="uk-width-1-2 uk-flex uk-flex-middle uk-flex-column ">
+                <form action="{% url 'quiz_start' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="blitz" value="False" readonly>
+                    <input class="uk-button-large " type="submit" value="Повний Тест">
+                </form><br>
+                В цьому тесті застосована вибірка з {{ number_questions }} питань, по кілька з кожної категорії.<br>
+                На питання бажано відповісти за час до {{time_quiz}} хв.
+                <br><br>
 
-        Тест вважається зданим, якщо вірні відповіді дано не менше, ніж на 80% питань за відведений час.
+            </div>
+            <div class="uk-width-1-2 uk-flex uk-flex-middle uk-flex-column ">
+                <form action="{% url 'quiz_start' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="blitz" value="True" readonly>
+                    <input class="uk-button-large " type="submit"  value="Бліц Тест">
+                </form><br>
+                В тесті застосована вибірка з {{ number_questions_in_blitz }} питань, посортованих в
+                порядку складності.<br>
+                Чим меншу кількість разів на дане питання відповіли вірно - тим вищий його рейтинг.
+                На питання бажано відповісти за час до {{time_quiz_blitz}} хв.
+                <br><br>
 
-        <p>Успіхів!</p>
+            </div>
+        </div>
+
     </div>
 </div>
 {% endblock %}

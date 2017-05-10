@@ -3,37 +3,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.2/css/uikit.min.css"/>
     <link rel="stylesheet" href="{% static 'quiz/css/quiz.css' %}"/>
 </head>
 <body>
-<div id="container" class="uk-width-large-7-10 uk-width-medium-1-1 uk-container-center">
-    <header>
-        <img src="{% static 'quiz/images/python_logo.png' %}" class="site_logo" alt="Logo"/>
-        <nav class="uk-navbar" style="padding-top: 2em;">
+<div class="uk-grid">
+    <div id="container" class="uk-width-large-7-10 uk-width-medium-9-10 uk-width-small-1-1 uk-container-center">
+        <header>
+            <img src="{% static 'quiz/images/python_logo.png' %}" class="site_logo uk-hidden-small " alt="Logo"/>
+            <nav class="uk-navbar" style="padding-top: 2em;">
 
-            <ul class="uk-navbar-nav">
-                <li><a href="{% url 'index' %}">Про тест</a></li>
-                <li><a href="{% url 'quiz' 'start' %}">Тест</a></li>
-                <li><a href="{% url 'useful_links' %}">Корисні лінки</a></li>
-                <li><a href="{% url 'contact' %}">Контакти</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div id="content">
-        {% block content %}{% endblock %}
+                <ul class="uk-navbar-nav uk-navbar-center">
+                    <li><a href="{% url 'index' %}">Тест</a></li>
+                    <li><a href="{% url 'useful_links' %}">Корисні лінки</a></li>
+                    <li><a href="{% url 'contact' %}">Контакти</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+        <footer>
+            <p class="footer-text">This site created by Django - Python web framework and UIkit - CSS framework. <br>
+                v0.9.1 Copyright by DebOS (c) 2016</p>
+        </footer>
     </div>
-    <footer>
-        <p class="footer-text">This site created by Django - Python web framework and UIkit - CSS framework. <br>
-            v0.8 Copyright by DebOS (c) 2016</p>
-    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.2/js/uikit.min.js"></script>
+    <script type="text/javascript" src="{% static 'quiz/js/quiz.js' %}"></script>
+
 </div>
-
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.2/js/uikit.min.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-<script type="text/javascript" src="{% static 'quiz/js/quiz.js' %}"></script>
-
-
 </body>
 </html>

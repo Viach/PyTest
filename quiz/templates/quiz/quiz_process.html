@@ -3,16 +3,17 @@
 
 {% block content %}
 <div class="uk-grid">
-    <div class="uk-width-8-10">
-        <form action="{% url 'quiz' 'next' %}" method="post">
-            <div class="title"> Питання  <span id="current_question_number_in_quiz">{{current_question_number_in_quiz}}</span> із <span
+    <div class="uk-width-8-10 no-select">
+        <form action="{% url 'quiz_process' %}" method="post">
+            {% csrf_token %}
+            <div class="title"> Питання <span
+                    id="current_question_number_in_quiz">{{current_question_number_in_quiz}}</span> із <span
                     id="number_questions">{{number_questions}}</span> питань
             </div>
-            {% csrf_token %}
             <div class="uk-text-large">{{current_question.name}}</div>
             {% if current_question.code %}
             <div>
-                <pre class="code">{{current_question.code}}</pre>
+                <pre class="code no-select">{{current_question.code}}</pre>
             </div>
             {% endif %}
             <ul class="uk-list uk-list-striped ">
@@ -27,7 +28,7 @@
 
     </div>
     <div class='countdown uk-width-2-10 uk-flex uk-flex-middle uk-flex-column uk-flex-space-between'>
-        <div id="clockdiv" >
+        <div id="clockdiv">
             <div>
                 <span class="hours"></span>
             </div>
@@ -38,9 +39,16 @@
                 <span id="seconds" class="seconds"></span>
             </div>
         </div>
-        <form  action="{% url 'quiz' 'finish' %}" method="post">
+        <div id="python3_warning" class="uk-text-muted uk-test-large uk-text-warning uk-text-bold uk-text-center">
+            УВАГА!<br>
+            Тест по<br>
+            Python 3
+        </div>
+        <form action="{% url 'quiz_process' %}"  method="post">
             {% csrf_token %}
-            <input class="uk-button-large" type="submit" value="Перервати тест">
+            <input id="time_per_question" type="hidden"  value="{{request.session.time_per_question}}"   readonly>
+            <input type="hidden" name="quiz_cancel" value="True" readonly>
+            <input class="uk-button-large" type="submit"  value="Перервати тест">
         </form>
     </div>
 

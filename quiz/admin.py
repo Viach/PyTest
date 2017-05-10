@@ -8,7 +8,7 @@ admin.site.register(CategoryQuestion)
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    fields = [ 'name', 'code', 'category', 'answers', 'correct_answer', 'explanation', 'enabled']
+    fields = [ 'name', 'code', 'category', 'answers', 'correct_answer', 'explanation','answered', 'wrong_answered', 'enabled']
     list_display = ['name', 'category', 'enabled', ]
     list_editable = ['enabled', ]
     list_filter = ['enabled', 'category', ]

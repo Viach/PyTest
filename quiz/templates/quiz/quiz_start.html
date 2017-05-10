@@ -7,18 +7,32 @@
 <p class="title">Інформація про тест</p>
 
 <div class="uk-text-left">
-    <div>
+    <div class="title">
         Питання приведені до Python3. Різницю між версіями можна прочитати на
         <a href="https://wiki.python.org/moin/Python2orPython3">wiki.python.org</a>.
     </div>
-    <br>
-    В цілому в тесті застосована вибірка з {{ number_questions }} питань, на які бажано відповісти за час до
-    {% widthratio number_questions 1 1 %} хв.<br>
+    <ul class="uk-list uk-list-striped uk-list-space">
+        <li>
+        В цьому тесті застосована вибірка з {{ number_questions }} питань, по кілька з кожної категорії.<br>
+        На питання бажано відповісти за час до {% widthratio number_questions 1 1 %} хв.
 
+        <br><br>
+        <form action="{% url 'quiz_process' %}" method="post">
+            {% csrf_token %}
+            <input class="uk-button-large" type="submit" value="Перейти до тестування">
+        </form>
+        </li>
+                <li>
+        Даний тест - бліц. В ньому застосована вибірка з {{ number_questions_in_blitz }} питань, посортований в порядку складності.<br>
+        Чим меншу кількість разів на дане питання відповіли вірно - тим вищий його рейтинг.
+        На питання бажано відповісти за час до {% widthratio number_questions_in_blitz 1 1 %} хв.
+
+        <br><br>
+        <form action="{% url 'quiz_process' %}" method="post">
+            {% csrf_token %}
+            <input class="uk-button-large" type="submit" value="Перейти до тестування">
+        </form>
+        </li>
+    </ul>
 </div>
-<br><br>
-<form action="{% url 'quiz' 'next' %}">
-    <input class="uk-button-large" type="submit" value="Перейти до тестування">
-</form>
-
 {% endblock %}

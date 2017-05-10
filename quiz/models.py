@@ -1,6 +1,7 @@
 from django.db import models
-from django.contrib.sessions.models import Session
 from  django.core.validators import validate_comma_separated_integer_list
+from django.conf import settings
+
 
 from datetime import datetime, timedelta
 from  random import shuffle
@@ -23,6 +24,8 @@ class Question(models.Model):
     correct_answer = models.CharField(max_length=10, validators=[validate_comma_separated_integer_list])
     explanation = models.TextField(blank=True, default='Спробуйте і переконайтеся.')
     enabled = models.BooleanField(default=False)
+    answered = models.IntegerField(default=1)
+    wrong_answered = models.IntegerField(default=1)
 
     user_answer = {None}
 
@@ -41,43 +44,33 @@ class Question(models.Model):
     def get_input_type(self):
         return 'radio' if len(self.get_correct_answer()) == 1 else 'checkbox'
 
-
-class S(Session):
-    def __init__(self):
-        # delete all children for G class
-        self.quiz = None
-        self.mail = None
-        pass
-
-    def __str__(self):
-        return 'My Session Object'
+    def get_k_difficulty(self):
+        self.k_difficulty = self.wrong_answered / self.answered if self.answered else 1
+        return self.k_difficulty
 
 
 class Quiz():
-    def __init__(self):
+    def __init__(self, blitz=False):
         self.questions = []
-        self.categories = CategoryQuestion.objects.all()
-        for category in self.categories:
-            lst = list(Question.objects.all().filter(enabled=True).filter(category=category.id))
-            shuffle(lst)
-            self.questions.extend(lst[-2:])
-        self.current_number_question = -1
+        self.blitz = blitz
+        if self.blitz:
+            self.lst = list(Question.objects.all().filter(enabled=True))
+            self.lst = sorted(self.lst, key=lambda x: x.get_k_difficulty(), reverse=True)
+            self.questions.extend(self.lst[:settings.NUMBER_QUESTIONS_IN_BLITZ])
+
+        else:
+            self.categories = CategoryQuestion.objects.all()
+            for self.category in self.categories:
+                self.lst = list(Question.objects.all().filter(enabled=True).filter(category=self.category.id))
+                shuffle(self.lst)
+                self.questions.extend(self.lst[-settings.NUMBER_QUESTIONS_PER_CATEGORY:])
+
         self.start_time = datetime.now()
         self.stop_time = datetime.now()
         self.time_delta = self.stop_time - self.start_time
 
-
     def __str__(self):
         return 'Set of Questions'
-
-    def result(self):
-        list_result = [v.get_correct_answer() == v.user_answer for v in self.questions]
-        c_a = list_result.count(True)   # correct answers
-        w_a = list_result.count(False)  # wrong answers
-        n_a = c_a + w_a
-        k = round(c_a / n_a * 100)
-        data_result = [c_a, w_a, n_a, k, k >= 80]
-        return [list_result, data_result]
 
 
 class UsefulLinks(models.Model):

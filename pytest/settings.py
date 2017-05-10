@@ -19,12 +19,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=3s#z-m4(h5lqlj*37n0%@p0vu=yo97%wd%7bgkh+%!+y8p&f='
+SECRET_KEY = '=3s#z%#$%#$-m4567(h5lqljsadhgid*37n0%@p#$%$^&%7bgkh+%!+y8p&f='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'debos.net']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'debos.net',]
 
 # Application definition
 
@@ -49,6 +49,8 @@ MIDDLEWARE = [
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.file'
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 ROOT_URLCONF = 'pytest.urls'
 
@@ -115,6 +117,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # email config
 ADMINS = [('vch', 'vch'), ]
@@ -129,3 +132,9 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
+
+
+NUMBER_QUESTIONS_IN_BLITZ = 10
+NUMBER_QUESTIONS_PER_CATEGORY = 2
+TIME_PER_QUESTION = 45   # time in seconds
+TIME_PER_QUESTION_BLITZ = 26   # time in seconds
